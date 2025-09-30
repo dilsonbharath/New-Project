@@ -7,31 +7,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
-<style>
 
-#li1:hover, #li2:hover, #li3:hover, #li4:hover, #view:hover, #download:hover {
-  transform: scale(1.1);
-}
-</style>
-<body style="background-color: whitesmoke;">
-    <header class="position-fixed top-0 start-0 w-100 bg-dark text-white p-2 " style="z-index: 1030;">
+<body style="background-color: whitesmoke; margin-bottom: 0%;">
+    <header class="position-fixed top-0 start-0 w-100 bg-dark text-white p-3 " style="z-index: 100;">
         <div class="row">
-            <div class="col-lg-9 col-md-6 col-sm-12 ">
-                <h1 class="text-light p-2">Dilson</h1>
+            <div class="col-lg-9 col-md-8 col-sm-12">
+                <h1 class="text-light">Dilson</h1>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 p-2">
+            <div class="col-lg-3 col-md-4 col-sm-12 p-2">
                 <nav class="navbar">
                     <ul class="list-inline">
-                        <li id="li1" class="list-inline-item"><a
+                        <li class="list-inline-item"><a
                                 class="text-decoration-none text-white bg-secondary pb-1 ps-2 pe-2 rounded"
-                                href="#">Home</a></li>
-                        <li id="li4" class="list-inline-item" id="but-abt"><a
+                                href="index.html">Home</a></li>
+                        <li class="list-inline-item"><a
                                 class="text-decoration-none text-white bg-secondary pb-1 ps-2 pe-2 rounded"
                                 href="#about">About</a></li>
-                        <li id="li3" class="list-inline-item"><a
+                        <li class="list-inline-item"><a
                                 class="text-decoration-none text-white bg-secondary pb-1 ps-2 pe-2 rounded"
                                 href="#">Projects</a></li>
-                        <li id="li2" class="list-inline-item"><a
+                        <li class="list-inline-item"><a
                                 class="text-decoration-none text-white bg-secondary pb-1 ps-2 pe-2 rounded"
                                 href="#contact">Contact</a></li>
                     </ul>
@@ -39,41 +34,29 @@
             </div>
         </div>
     </header>
-    <div class="container-fluide" style="height: 150px;"></div>
-    <div class="container-fluide m-5 rounded shadow-lg p-5" style="background-color: white;">
+    <div class="container-fluide" style="height: 140px;"></div>
+    <div class="container-fluide m-5 rounded shadow-lg p-3" style="background-color: rgb(255, 253, 242);">
         <div class="row">
             <div class="col-lg-8 col-md-6 col-sm-12 order-2 order-md-1">
-                <h2 class="mt-5 mb-3 ">Hello I'm, Dilson Bharath</h2>
-                <h1 class="mt-5 mb-3 text-primary">Aspiring, Software Developer</h1>
-                <p class="mt-5 mb-5">Myself Dilson, currently holding a B.Tech degree in AI field at Kumaraguru College of
+                <h2>Hello its, Dilson Bharath</h2>
+                <h1 class="mt-5">Aspiring, Software Developer</h1>
+                <p class="mt-5">Myself Dilson, currently holding a B.Tech degree in AI field at Kumaraguru College of
                     technology. I have eager to gain experience in various programming languages and frameworks, and I
                     enjoy working on challenging projects that push my skills to the next level.</p>
-                <div class="container-fluide d-flex">
-                    <button id="view" class="btn btn-info me-3"><a href="Updated Resume.pdf" target="_blank"
-                            class="text-decoration-none text-white">View Resume</a></button>
-                    <button id="download" class="btn btn-success"><a href="Updated Resume.pdf" download
-                            class="text-decoration-none text-white">Download Resume</a></button>
-                </div>
             </div>
-            <div
-                class="col-lg-4 col-md-6 mb-5 md-mb-auto col-sm-12  order-1 order-md-2  d-flex justify-content-center align-items-center">
-                <img src="profile.png" class="shadow-lg img-fluide"
-                    style="height: 250px; width: 242px; border-radius: 50%;" alt="">
+            <div class="col-lg-4 col-md-6 mb-5 md-mb-auto col-sm-12  order-1 order-md-2  d-flex justify-content-center align-items-center">
+                <img src="profile.png" class="shadow-lg img-fluide" style="height: 200px; width: 190px; border-radius: 50%;" alt="">
             </div>
         </div>
     </div>
-    
-    <div id="about" >
-        <div style="height: 100px;"></div>
-        <div class="container-fluide bg-light rounded shadow-lg m-5 " >
+    <div class="container-fluide bg-light rounded shadow-lg m-5" id="about">
         <div class="card ">
-            <div class="bg-dark text-center text-light p-4 rounded">
-                <h1>About Me</h1>
+            <div class="bg-secondary text-center text-light p-4 rounded">
+                <h1>Education & Skills</h1>
             </div>
-
-            <div class="row card-body p-1">
+            <div class="row card-body p-1 ">
                 <div class="col">
-                    <div class="card m-4 shadow-lg" >
+                    <div class="card m-4" style="background-color: rgb(255, 253, 242);">
                         <div class="bg-dark text-center text-light  rounded">
                             <h1 class="p-2">Education</h1>
                         </div>
@@ -95,7 +78,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card m-4 shadow-lg" >
+                    <div class="card m-4" style="background-color: rgb(255, 253, 242);">
                         <div class="bg-dark text-center text-light  rounded">
                             <h1 class="p-2">Soft Skills</h1>
                         </div>
@@ -104,13 +87,11 @@
                             <h5>Adaptabiliyt</h5>
                             <h5>Manage Organizing</h5>
                             <h5>Easily engage</h5>
-                            <h5>Work Ethic</h5>
-                            <h5>Communication</h5>
                         </div>
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card m-4 shadow-lg" >
+                    <div class="card m-4" style="background-color: rgb(255, 253, 242);">
                         <div class="bg-dark text-center text-light  rounded">
                             <h1 class="p-2">Technical Skills</h1>
                         </div>
@@ -137,22 +118,23 @@
             </div>
 
 
+
+
+
         </div>
     </div>
-    </div>
-    
     <footer class="container-fluide mb-0 p-3 bg-dark text-light" id="contact">
         <h1 class="text-center">Contact</h1>
-        <div class="container  d-flex justify-content-center">
-            <div class="p-2 rounded">
+        <div class="container mt-3 d-flex  justify-content-center">
+            <div class="p-2 me-4 rounded">
                 <a href="mailto:dilsonbharath76@gmail.com" target="_blank"><img src="gmail.png"
                         style="width: 30px; height: 30px;"></a>
             </div>
-            <div class="p-2 rounded">
+            <div class="p-2 me-4 rounded">
                 <a href="https://www.linkedin.com/in/dilson-bharath-r/" target="_blank"><img src="linkedin.png"
                         style="width: 30px; height: 30px;"></a>
             </div>
-            <div class="p-2 rounded">
+            <div class="p-2 me-4 rounded">
                 <a href="https://www.instagram.com/dilsonbharath/" target="_blank"><img src="social.png"
                         style="width: 30px; height: 30px;"></a>
             </div>
@@ -166,6 +148,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+
 </body>
 
 </html>
