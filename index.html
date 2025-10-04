@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,164 +9,125 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <style>
-
-#li1:hover, #li2:hover, #li3:hover, #li4:hover, #view:hover, #download:hover, #gmail:hover, #linked:hover, #insta:hover, #face:hover {
-  transform: scale(1.1);
+    #li1:hover,
+    #li2:hover,
+    #li3:hover,
+    #li4:hover,
+    #li5:hover,
+    #view:hover,
+    #download:hover,
+    #gmail:hover,
+    #linked:hover,
+    #abc:hover,
+    #insta:hover,
+    #face:hover {
+        transform: scale(1.1);
+    }
+</style>
+<style>
+    @media (max-width: 767px) {
+        .offcanvas {
+            max-width: 250px !important;
+        }
+    }
+    html {
+  scroll-behavior: smooth;
 }
 </style>
+
 <body style="background-color: whitesmoke;">
-    <header class="position-fixed top-0 start-0 w-100 bg-dark text-white p-2 " style="z-index: 1030;">
-        <div class="row">
-            <div class="col-lg-8 col-md-6 col-sm-12 ">
-                <h1 class="text-light p-2 ">Dilson</h1>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-12 p-2 text-center">
-                <nav class="navbar">
-                    <ul class="list-inline">
-                        <li id="li1" class="list-inline-item"><a
-                                class="text-decoration-none text-white bg-secondary pb-1 ps-2 pe-2 rounded"
-                                href="#">Home</a></li>
-                        <li id="li4" class="list-inline-item" id="but-abt"><a
-                                class="text-decoration-none text-white bg-secondary pb-1 ps-2 pe-2 rounded"
-                                href="#about">About</a></li>
-                        <li id="li3" class="list-inline-item"><a
-                                class="text-decoration-none text-white bg-secondary pb-1 ps-2 pe-2 rounded"
-                                href="#">Projects</a></li>
-                        <li id="li2" class="list-inline-item"><a
-                                class="text-decoration-none text-white bg-secondary pb-1 ps-2 pe-2 rounded"
-                                href="#contact">Contact</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+
+    <header class="sticky-top">
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg p-4">
+  <div class="container">
+    <a class="navbar-brand" id="xx" href="#">Dilson Bharath</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="offcanvas offcanvas-end bg-dark text-white" tabindex="-1" id="offcanvasNavbar"
+      aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="offcanvas"
+          aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item" id="li1"><a class="nav-link" href="#">Home</a></li>
+          <li class="nav-item" id="li2"><a class="nav-link" href="#about">About Me</a></li>
+          <li class="nav-item" id="li3"><a class="nav-link" href="#">Projects</a></li>
+          <li class="nav-item" id="li4"><a class="nav-link" href="#">Skills</a></li>
+          <li class="nav-item" id="li5"><a class="nav-link" href="#connect">Connect</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
     </header>
-    <div class="container-fluide" style="height: 160px;"></div>
-    <div class="container-fluide m-5 rounded shadow-lg p-5" style="background-color: white;">
-        <div class="row">
-            <div class="col-lg-8 col-md-6 col-sm-12 order-2 order-md-1">
-                <h2 class="mt-5 mb-3 ">Hello I'm, Dilson Bharath</h2>
-                <h1 class="mt-5 mb-3 text-primary">Aspiring, Software Developer</h1>
-                <p class="mt-5 mb-5">Myself Dilson, currently holding a B.Tech degree in AI field at Kumaraguru College of
-                    technology. I have eager to gain experience in various programming languages and frameworks, and I
-                    enjoy working on challenging projects that push my skills to the next level.</p>
-                <div class="container-fluide d-flex">
-                    <button id="view" class="btn btn-info me-3"><a href="Updated Resume.pdf" target="_blank"
-                            class="text-decoration-none text-white">View Resume</a></button>
-                    <button id="download" class="btn btn-success"><a href="Updated Resume.pdf" download
-                            class="text-decoration-none text-white">Download Resume</a></button>
+    <section style="width: 100%;">
+        <div class="container p-5" >
+            <div class="row mt-5">
+                <div class="col-md-6 justify-content-center align-items-center d-flex pt-5">
+                    <img src="work.jpg" class="rounded " style="width: 300px; height: 240px;">
                 </div>
-            </div>
-            <div
-                class="col-lg-4 col-md-6 mb-5 md-mb-auto col-sm-12  order-1 order-md-2  d-flex justify-content-center align-items-center">
-                <img src="profile.png" class="shadow-lg img-fluide"
-                    style="height: 250px; width: 242px; border-radius: 50%;" alt="">
+                <div class="col-md-6 ps-md-5 d-flex flex-column justify-content-center align-items-start">
+                    <div  class="my-5 ">
+                        <h5 class="fs-lg-2">Hello I'm</h5>
+                        <h4 class="text-primary fs-lg-1 mt-2">DILSON BHARATH</h4>
+                        <h4 class="d-inline fs-lg-1 mt-4">Aspiring,<h4 class="fs-lg-1 d-inline" style="color: blueviolet;"> Software Developer</h4></h4>
+                    </div>
+                    <div class="d-flex  align-items-center  ">
+                        <a id="abc" href="#connect" class="btn btn-outline-primary p-3 rounded text-decoration-none text-light bg-primary"
+                            style="height: 60px; width: 200px;">
+                            <div class="d-flex gap-2">
+                                <img src="link.png" style="height: 30px; width: 30px;">
+                                <p class="p-0.5">Let's Connect</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div id="about" >
-        <div style="height: 120px;"></div>
-        <div class="container-fluide bg-light rounded shadow-lg m-5 " >
-        <div class="card ">
-            <div class="bg-primary text-center text-light p-4 rounded">
-                <h1>About Me</h1>
-            </div>
 
-            <div class="row w-100 card-body p-1 ms-2 mt-5 mb-5">
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="card m-4 shadow-lg" >
-                        <div class="bg-success text-center text-light  rounded">
-                            <h1 class="p-2">Education</h1>
-                        </div>
-                        <div class="card-body pe-1">
-                            <div >
-                                <h4 class="d-inline">SSLC</h4>
-                                <p class="d-inline">SMA Matriculation Higher Seconadary School - 96.4%(2020)</p>
-                            </div>
-                            <div>
-                                <h4 class="d-inline">HSC</h4>
-                                <p class="d-inline">SMA Matriculation Higher Seconadary School - 95.3%(2022)</p>
-                            </div>
-                            <div>
-                                <h4 class="d-inline">UG</h4>
-                                <p class="d-inline">Kumaraguru College of Technology - 7 CGPA(2022-2026)</p>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 ">
-                    <div class="card m-4 shadow-lg" >
-                        <div class="bg-success text-center text-light  rounded">
-                            <h1 class="p-2">Soft Skills</h1>
-                        </div>
-                        <div class="card-body ps-3">
-                            <p>Logical Thinking</p>
-                            <p>Adaptabiliyt</p>
-                            <p>Manage Organizing</p>
-                            <p>Work Ethic</p>
-                            <p>Communication</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="card m-4 shadow-lg" >
-                        <div class="bg-success text-center text-light  rounded">
-                            <h1 class="p-2">Technical Skills</h1>
-                        </div>
-                        <div class="card-body p-3 ">
-                            <div>
-                                <h5 class="d-block d-md-inline">Programming languages: </h5>
-                                <p class="d-block d-md-inline">Python, CPP basics</p>
-                            </div>
-                            <div>
-                                <h5 class="d-block d-md-inline">Web Development: </h5>
-                                <p class="d-block d-md-inline">HTML, CSS, Bootstrap, Javascript, React</p>
-                            </div>
-                            <div>
-                                <h5 class="d-block d-md-inline">Tools: </h5>
-                                <p class="d-block d-md-inline">VS code, GitHub</p>
-                            </div>
-                            <div>
-                                <h5 class="d-block d-md-inline">AI Tools: </h5>
-                                <p class="d-block d-md-inline">ChatGPT, Claude</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluide pt-4 ps-5 pe-5 pb-3 rounded" style="background-color: whitesmoke;">
-                <div class="row ps-5 pe-5 pt-4">
-                    <div class="col-lg-4 col-md-12 col-sm-12 text-dark mb-4">
-                        <h3>Let's see my profiles..</h3>
-                    </div>
-                <div class="col-lg-2 col-md-4 col-sm-6 p-1 ">
-                    <a href="https://leetcode.com/u/dilsonbharath76/" class="text-decoration-none text-dark d-flex" target="_blank">
-                        <img src="icons8-leetcode-100.png" style="height: 25px; width: 25px;" alt="HTML">
-                        <p>Leetcode</p>
-                    </a>
-                </div>
-                <div class="col-lg-2 col-md-4 col-sm-6 p-1 ">
-                    <a href="https://github.com/dilsonbharath" class="text-decoration-none text-dark d-flex" target="_blank ">
-                        <img src="icons8-github-100.png" style="height: 25px; width: 25px;" alt="HTML">
-                        <p>GitHub</p>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-12 col-sm-12">
-
-                </div>
-
-            </div>
-
-            </div>
-            
+        <div class="d-flex justify-content-center rounded py-5 mb-5">
+            <a href="#about"><img src="2985150.png" style="width: 30px; height: 30px;"></a>
         </div>
-    </div>
-    </div>
+    </section>
+
+    <section id="about" class="container my-5">
+        <div class="container-fluide mx-5 mt-5 rounded shadow-lg p-5" style="background-color: white; " >
+            <div class="row">
+                <div class="col-lg-8 col-md-6 col-sm-12 order-2 order-md-1">
+                    <h2 class="mt-5 mb-3 text-primary">About Me</h2>
+                    <p class="mt-5 mb-5">I'm final year AIDS student passionate about developing impactful technology
+                        solution. I have eager to gain experience in various programming languages and frameworks, and I
+                        enjoy working on challenging projects that push my skills to the next level.</p>
+                    <div class="container-fluide d-flex">
+                        <button id="view" class="btn btn-info me-3"><a href="Updated Resume.pdf" target="_blank"
+                                class="text-decoration-none text-white">View Resume</a></button>
+                        <button id="download" class="btn btn-success"><a href="Updated Resume.pdf" download
+                                class="text-decoration-none text-white">Download Resume</a></button>
+                    </div>
+                </div>
+                <div
+                    class="col-lg-4 col-md-6 mb-5 md-mb-auto col-sm-12  order-1 order-md-2  d-flex justify-content-center align-items-center">
+                    <img src="profile.png" class="shadow-lg img-fluide"
+                        style="height: 250px; width: 242px; border-radius: 50%;" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
     
-    <footer class="container-fluide mb-0 p-3 bg-dark text-light" id="contact">
-        <h1 class="text-center">Contact</h1>
-        <div class="container  d-flex justify-content-center">
+
+
+    <footer class="container-fluide mb-0 p-1 mt-5 text-dark" id="connect">
+        <div class="text-center pt-3 pb-2">
+            <h3>Let's Connect</h3>
+            <p>Find me on these platforms, and let's connect!</p>
+        </div>
+        <div class="container  d-flex justify-content-center pb-2">
             <div id="gmail" class="p-2 rounded">
                 <a href="mailto:dilsonbharath76@gmail.com" target="_blank"><img src="gmail.png"
                         style="width: 30px; height: 30px;"></a>
@@ -188,6 +150,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+        <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const offcanvas = document.getElementById('offcanvasNavbar');
+    const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+
+    document.querySelectorAll('#offcanvasNavbar .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        bsOffcanvas.hide();
+      });
+    });
+  });
+</script>
+
+
 </body>
 
 </html>
