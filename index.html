@@ -29,8 +29,11 @@
   #skill5:hover,
   #skill6:hover,
   #skill7:hover,
-  #skill8:hover {
+  #skill8:hover,
+  #card1:hover,
+  #card2:hover {
     transform: scale(1.1);
+    cursor: pointer;
   }
 </style>
 <style>
@@ -81,7 +84,7 @@
             <ul class="navbar-nav ms-auto">
               <li class="nav-item" id="li1"><a class="nav-link" href="#home">Home</a></li>
               <li class="nav-item" id="li2"><a class="nav-link" href="#about">About Me</a></li>
-              <li class="nav-item" id="li3"><a class="nav-link" href="#">Projects</a></li>
+              <li class="nav-item" id="li3"><a class="nav-link" href="#projects">Projects</a></li>
               <li class="nav-item" id="li4"><a class="nav-link" href="#skills">Skills</a></li>
               <li class="nav-item" id="li5"><a class="nav-link" href="#connect">Connect</a></li>
             </ul>
@@ -125,8 +128,8 @@
     </div>
   </section>
 
-  <section id="about" class="container">
-    <div class="container-fluide mx-5 rounded shadow-lg p-5" style="background-color: white; ">
+  <section id="about" class="container mb-5 pb-5">
+    <div class="container-fluide mx-5  rounded shadow-lg p-5" style="background-color: white; ">
       <div class="row">
         <div class="col-lg-8 col-md-6 col-sm-12 order-2 order-md-1">
           <h2 class="mt-5 mb-3 text-primary">About Me</h2>
@@ -148,15 +151,15 @@
     </div>
   </section>
 
-  <section>
+  <section id="projects">
     <div class="text-center mt-5 pt-5">
       <h2 class="text-success">Projects</h2>
     </div>
     <div class="container-fluide d-flex justify-content-center align-items-center">
-      <div class="row p-5 m-0 m-md-5 justify-content-center align-items-center ">
+      <div class="row p-3 m-0 m-md-5 justify-content-center align-items-center ">
         <div class="col-12 col-md-4 mx-2 mx-md-5 mb-5">
           <div class="container-fluide">
-            <div class="card ">
+            <div class="card " id="card1">
               <img src="Screenshot 2025-10-05 212838.png" class="card-img-top img-fluid" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Portfolio Website</h5>
@@ -170,7 +173,7 @@
         </div>
         <div class="col-12 col-md-4 mx-2 mx-md-5" >
           <div class="container-fluide">
-            <div class="card ">
+            <div class="card " id="card2">
               <img src="project2.png" class="card-img-top img-fluid" alt="...">
               <div class="card-body">
                 <h5 class="card-title">Fitness Tracker</h5>
