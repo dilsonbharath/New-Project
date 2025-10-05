@@ -2,291 +2,330 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dilson Bharath 🕷</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dilson Bharath 🕷</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <style>
-    #li1:hover,
-    #li2:hover,
-    #li3:hover,
-    #li4:hover,
-    #li5:hover,
-    #view:hover,
-    #download:hover,
-    #xx:hover,
-    #gmail:hover,
-    #linked:hover,
-    #abc:hover,
-    #insta:hover,
-    #face:hover,
-    #skill1:hover,
-    #skill2:hover,
-    #skill3:hover,
-    #skill4:hover,
-    #skill5:hover,
-    #skill6:hover,
-    #skill7:hover,
-    #skill8:hover {
-        transform: scale(1.1);
-    }
+  #li1:hover,
+  #li2:hover,
+  #li3:hover,
+  #li4:hover,
+  #li5:hover,
+  #view:hover,
+  #download:hover,
+  #xx:hover,
+  #gmail:hover,
+  #linked:hover,
+  #abc:hover,
+  #insta:hover,
+  #face:hover,
+  #skill1:hover,
+  #skill2:hover,
+  #skill3:hover,
+  #skill4:hover,
+  #skill5:hover,
+  #skill6:hover,
+  #skill7:hover,
+  #skill8:hover {
+    transform: scale(1.1);
+  }
 </style>
 <style>
-    @media (max-width: 767px) {
-        .offcanvas {
-            max-width: 250px !important;
-        }
+  @media (max-width: 767px) {
+    .offcanvas {
+      max-width: 250px !important;
     }
-    html {
-  scroll-behavior: smooth;
-}
-@media (min-width: 768px) {
-  html {
-    scroll-padding-top: 130px; /* height of desktop sticky header */
   }
-}
 
-/* Scroll offset for mobile */
-@media (max-width: 767px) {
   html {
-    scroll-padding-top: 120px; /* height of mobile sticky header (taller due to toggler) */
+    scroll-behavior: smooth;
   }
-}
+
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: 130px;
+      /* height of desktop sticky header */
+    }
+  }
+
+  /* Scroll offset for mobile */
+  @media (max-width: 767px) {
+    html {
+      scroll-padding-top: 120px;
+      /* height of mobile sticky header (taller due to toggler) */
+    }
+  }
 </style>
 
 <body style="background-color: whitesmoke;">
 
-    <header class="sticky-top">
-        <nav class="navbar navbar-dark bg-dark navbar-expand-lg p-4">
-  <div class="container">
-    <a class="navbar-brand" id="xx" href="#">Dilson Bharath</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <header class="sticky-top">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg p-4">
+      <div class="container">
+        <a class="navbar-brand" id="xx" href="#">Dilson Bharath</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="offcanvas offcanvas-end bg-dark text-white" tabindex="-1" id="offcanvasNavbar"
-      aria-labelledby="offcanvasNavbarLabel">
-      <div class="offcanvas-header">
-        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="offcanvas"
-          aria-label="Close"></button>
+        <div class="offcanvas offcanvas-end bg-dark text-white" tabindex="-1" id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+            <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="offcanvas"
+              aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item" id="li1"><a class="nav-link" href="#home">Home</a></li>
+              <li class="nav-item" id="li2"><a class="nav-link" href="#about">About Me</a></li>
+              <li class="nav-item" id="li3"><a class="nav-link" href="#">Projects</a></li>
+              <li class="nav-item" id="li4"><a class="nav-link" href="#skills">Skills</a></li>
+              <li class="nav-item" id="li5"><a class="nav-link" href="#connect">Connect</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div class="offcanvas-body">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item" id="li1"><a class="nav-link" href="#home">Home</a></li>
-          <li class="nav-item" id="li2"><a class="nav-link" href="#about">About Me</a></li>
-          <li class="nav-item" id="li3"><a class="nav-link" href="#">Projects</a></li>
-          <li class="nav-item" id="li4"><a class="nav-link" href="#skills">Skills</a></li>
-          <li class="nav-item" id="li5"><a class="nav-link" href="#connect">Connect</a></li>
-        </ul>
+    </nav>
+
+  </header>
+  <section style="width: 100%;" id="home">
+    <div class="container p-5">
+      <div class="row mt-5">
+        <div class="col-md-6 justify-content-center align-items-center d-flex pt-5">
+          <img src="work.jpg" class="rounded " style="width: 300px; height: 240px;">
+        </div>
+        <div class="col-md-6 ps-md-5 d-flex flex-column justify-content-center align-items-start">
+          <div class="my-5 ">
+            <h5 class="fs-lg-2">Hello I'm</h5>
+            <h4 class="text-primary fs-lg-1 mt-2">DILSON BHARATH</h4>
+            <h4 class="d-inline fs-lg-1 mt-4">Aspiring,<h4 class="fs-lg-1 d-inline" style="color: blueviolet;"> Software
+                Developer</h4>
+            </h4>
+          </div>
+          <div class="d-flex  align-items-center  ">
+            <a id="abc" href="#connect" class="btn btn-sm  rounded text-decoration-none text-success bg-success-subtle"
+              style="height: 50px; width: 170px;">
+              <div class="d-flex m-2">
+                <img src="link (1).png" style="height: 18px; width: 18px;">
+                <p class="ps-2 fw-bold">Let's Connect</p>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</nav>
 
-    </header>
-    <section style="width: 100%;" id="home">
-        <div class="container p-5" >
-            <div class="row mt-5">
-                <div class="col-md-6 justify-content-center align-items-center d-flex pt-5">
-                    <img src="work.jpg" class="rounded " style="width: 300px; height: 240px;">
-                </div>
-                <div class="col-md-6 ps-md-5 d-flex flex-column justify-content-center align-items-start">
-                    <div  class="my-5 ">
-                        <h5 class="fs-lg-2">Hello I'm</h5>
-                        <h4 class="text-primary fs-lg-1 mt-2">DILSON BHARATH</h4>
-                        <h4 class="d-inline fs-lg-1 mt-4">Aspiring,<h4 class="fs-lg-1 d-inline" style="color: blueviolet;"> Software Developer</h4></h4>
-                    </div>
-                    <div class="d-flex  align-items-center  ">
-                        <a id="abc" href="#connect" class="btn btn-sm  rounded text-decoration-none text-success bg-success-subtle"
-                            style="height: 50px; width: 170px;">
-                            <div class="d-flex m-2">
-                                <img src="link (1).png" style="height: 18px; width: 18px;">
-                                <p class="ps-2 fw-bold">Let's Connect</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+    <div class="d-flex justify-content-center rounded py-5 my-5">
+      <a id="xx" style="background-color: white; width: 45px; height: 40px; border-radius: 50%;"
+        class="d-flex align-items-center justify-content-center shadow-lg" href="#about"><img src="2985150.png"
+          style="width: 35px; height: 32px;"></a>
+    </div>
+  </section>
+
+  <section id="about" class="container">
+    <div class="container-fluide mx-5 rounded shadow-lg p-5" style="background-color: white; ">
+      <div class="row">
+        <div class="col-lg-8 col-md-6 col-sm-12 order-2 order-md-1">
+          <h2 class="mt-5 mb-3 text-primary">About Me</h2>
+          <p class="mt-5 mb-5">I'm final year AIDS student passionate about developing impactful technology
+            solution. I have eager to gain experience in various programming languages and frameworks, and I
+            enjoy working on challenging projects that push my skills to the next level.</p>
+          <div class="container-fluide d-flex">
+            <button id="view" class="btn btn-info me-3"><a href="Updated Resume.pdf" target="_blank"
+                class="text-decoration-none text-white">View Resume</a></button>
+            <button id="download" class="btn btn-success"><a href="Updated Resume.pdf" download
+                class="text-decoration-none text-white">Download Resume</a></button>
+          </div>
+        </div>
+        <div
+          class="col-lg-4 col-md-6 mb-5 md-mb-auto col-sm-12  order-1 order-md-2  d-flex justify-content-center align-items-center">
+          <img src="profile.png" class="shadow-lg img-fluid" style="height: 260px; width: 240px; border-radius: 50%;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="text-center mt-5 pt-5">
+      <h2 class="text-success">Projects</h2>
+    </div>
+    <div class="container-fluide d-flex justify-content-center align-items-center">
+      <div class="row p-5 m-0 m-md-5 justify-content-center align-items-center ">
+        <div class="col-12 col-md-4 mx-2 mx-md-5 mb-5">
+          <div class="container-fluide">
+            <div class="card ">
+              <img src="Screenshot 2025-10-05 212838.png" class="card-img-top img-fluid" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Portfolio Website</h5>
+                <p class="card-text">Its simple Portfolio website using HTML, Bootstrap, and JavaScript code for showcase my skills.</p>
+                <a href="https://dilsonbharath.github.io/New-Project/" target="_blank" class="btn btn-primary">Go
+                  Visit</a>
+              </div>
             </div>
-        </div>
+          </div>
 
-        <div class="d-flex justify-content-center rounded py-5 mb-5">
-            <a id="xx" style="background-color: white; width: 45px; height: 40px; border-radius: 50%;" class="d-flex align-items-center justify-content-center shadow-lg" href="#about"><img src="2985150.png" style="width: 35px; height: 32px;"></a>
         </div>
-    </section>
-
-    <section id="about" class="container" >
-        <div class="container-fluide mx-5 rounded shadow-lg p-5" style="background-color: white; " >
-            <div class="row">
-                <div class="col-lg-8 col-md-6 col-sm-12 order-2 order-md-1">
-                    <h2 class="mt-5 mb-3 text-primary">About Me</h2>
-                    <p class="mt-5 mb-5">I'm final year AIDS student passionate about developing impactful technology
-                        solution. I have eager to gain experience in various programming languages and frameworks, and I
-                        enjoy working on challenging projects that push my skills to the next level.</p>
-                    <div class="container-fluide d-flex">
-                        <button id="view" class="btn btn-info me-3"><a href="Updated Resume.pdf" target="_blank"
-                                class="text-decoration-none text-white">View Resume</a></button>
-                        <button id="download" class="btn btn-success"><a href="Updated Resume.pdf" download
-                                class="text-decoration-none text-white">Download Resume</a></button>
-                    </div>
-                </div>
-                <div
-                    class="col-lg-4 col-md-6 mb-5 md-mb-auto col-sm-12  order-1 order-md-2  d-flex justify-content-center align-items-center">
-                    <img src="profile.png" class="shadow-lg img-fluid"
-                        style="height: 260px; width: 240px; border-radius: 50%;" >
-                </div>
+        <div class="col-12 col-md-4 mx-2 mx-md-5" >
+          <div class="container-fluide">
+            <div class="card ">
+              <img src="project2.png" class="card-img-top img-fluid" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Fitness Tracker</h5>
+                <p class="card-text">This website is built with help of an AI for an fitnesss tracking.</p>
+                <a href="https://dilsonbharath.github.io/Fitness-Tracker/" target="_blank" class="btn btn-primary">Go
+                  Visit</a>
+              </div>
             </div>
+          </div>
         </div>
-    </section>
-    
-   <section id="skills" style="margin-top: 150px;">
-    <div class="mt-5">
-        <div class="mt-5">
+
+
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" style="margin-top: 70px;">
+    <div>
+      <div>
         <h2 class="text-success text-center fw-bold">My Skills</h2>
         <p class="text-secondary text-center">Here are the skills I have developed over the weaks.</p>
-    </div>
-  <div class="container-fluide">
-    <div class="row justify-content-center">
-      
-      <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill1">
-        <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
-             style="width: 180px; height: 130px;">
-          <img src="./skills/python.jpg" class="img-fluid" 
-               style="width: 60px; height: 60px; border-radius: 50%;">
-          <h6 class="text-center mt-3">Python</h6>
-        </div>
       </div>
+      <div class="container-fluide">
+        <div class="row justify-content-center">
 
-      <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill2">
-        <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
-             style="width: 180px; height: 130px;">
-          <img src="./skills/html1.jpg" class="img-fluid" 
-               style="width: 60px; height: 60px; border-radius: 50%;">
-          <h6 class="text-center mt-3">HTML5</h6>
-        </div>
-      </div>
-      <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill3">
-        <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
-             style="width: 180px; height: 130px;">
-          <img src="./skills/css1.jpg" class="img-fluid" 
-               style="width: 60px; height: 60px; border-radius: 50%;">
-          <h6 class="text-center mt-3">CSS3</h6>
-        </div>
-      </div>
-
-      <div class="col-5 col-md-2 my-5 d-flex justify-content-center"   id="skill4">
-        <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
-             style="width: 180px; height: 130px;">
-          <img src="./skills/js.jpg" class="img-fluid" 
-               style="width: 60px; height: 60px; border-radius: 50%;">
-          <h6 class="text-center mt-3">JavaScript</h6>
-        </div>
-      </div>
-
-    </div>
-    <div class="row justify-content-center">
-      
-      <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill5">
-        <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
-             style="width: 180px; height: 130px;">
-          <img src="./skills/bootstrap.jpg" class="img-fluid" 
-               style="width: 60px; height: 60px; border-radius: 50%;">
-          <h6 class="text-center mt-3">Bootstrap</h6>
-        </div>
-      </div>
-
-      <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill6">
-        <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
-             style="width: 180px; height: 130px;">
-          <img src="./skills/git.jpg" class="img-fluid" 
-               style="width: 60px; height: 60px; border-radius: 50%;">
-          <h6 class="text-center mt-3">Git</h6>
-        </div>
-      </div>
-      <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill7">
-        <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
-             style="width: 180px; height: 130px;">
-          <img src="./skills/c++.jpg" class="img-fluid" 
-               style="width: 60px; height: 60px; border-radius: 50%;">
-          <h6 class="text-center mt-3">C++</h6>
-        </div>
-      </div>
-
-      <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill8">
-        <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
-             style="width: 180px; height: 130px;">
-          <img src="./skills/vscode.jpg" class="img-fluid" 
-               style="width: 60px; height: 60px; border-radius: 50%;">
-          <h6 class="text-center mt-3">VS code</h6>
-        </div>
-      </div>
-
-    </div>
-  </div>
-    </div>
-    
-</section>
-
-    <footer class="container-fluide mb-0 p-1 mt-5 text-dark" id="connect">
-        <div class="text-center pt-3 pb-2">
-            <h3>Let's Connect</h3>
-            <p>Find me on these platforms, and let's connect!</p>
-        </div>
-        <div class="container  d-flex justify-content-center pb-2">
-            <div id="gmail" class="p-2 rounded">
-                <a href="mailto:dilsonbharath76@gmail.com" target="_blank"><img src="gmail.png"
-                        style="width: 30px; height: 30px;"></a>
+          <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill1">
+            <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
+              style="width: 180px; height: 130px;">
+              <img src="./skills/python.jpg" class="img-fluid" style="width: 60px; height: 60px; border-radius: 50%;">
+              <h6 class="text-center mt-3">Python</h6>
             </div>
-            <div id="linked" class="p-2 rounded">
-                <a href="https://www.linkedin.com/in/dilson-bharath-r/" target="_blank"><img src="linkedin.png"
-                        style="width: 30px; height: 30px;"></a>
-            </div>
-            <div id="insta" class="p-2 rounded">
-                <a href="https://www.instagram.com/dilsonbharath/" target="_blank"><img src="social.png"
-                        style="width: 30px; height: 30px;"></a>
-            </div>
+          </div>
 
-            <div id="face" class="p-2 rounded">
-                <a href="https://www.facebook.com/dilson.bharath.7" target="_blank "><img src="facebook (1).png"
-                        style="width: 30px; height: 30px;"></a>
+          <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill2">
+            <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
+              style="width: 180px; height: 130px;">
+              <img src="./skills/html1.jpg" class="img-fluid" style="width: 60px; height: 60px; border-radius: 50%;">
+              <h6 class="text-center mt-3">HTML5</h6>
             </div>
+          </div>
+          <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill3">
+            <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
+              style="width: 180px; height: 130px;">
+              <img src="./skills/css1.jpg" class="img-fluid" style="width: 60px; height: 60px; border-radius: 50%;">
+              <h6 class="text-center mt-3">CSS3</h6>
+            </div>
+          </div>
+
+          <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill4">
+            <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
+              style="width: 180px; height: 130px;">
+              <img src="./skills/js.jpg" class="img-fluid" style="width: 60px; height: 60px; border-radius: 50%;">
+              <h6 class="text-center mt-3">JavaScript</h6>
+            </div>
+          </div>
+
         </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-        
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-  const offcanvas = document.getElementById('offcanvasNavbar');
-  const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+        <div class="row justify-content-center">
 
-  document.querySelectorAll('#offcanvasNavbar .nav-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('href'); // e.g., "#about"
+          <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill5">
+            <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
+              style="width: 180px; height: 130px;">
+              <img src="./skills/bootstrap.jpg" class="img-fluid"
+                style="width: 60px; height: 60px; border-radius: 50%;">
+              <h6 class="text-center mt-3">Bootstrap</h6>
+            </div>
+          </div>
 
-      // Only handle internal anchors
-      if (targetId && targetId.startsWith('#')) {
-        e.preventDefault(); // prevent default jump
+          <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill6">
+            <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
+              style="width: 180px; height: 130px;">
+              <img src="./skills/git.jpg" class="img-fluid" style="width: 60px; height: 60px; border-radius: 50%;">
+              <h6 class="text-center mt-3">Git</h6>
+            </div>
+          </div>
+          <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill7">
+            <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
+              style="width: 180px; height: 130px;">
+              <img src="./skills/c++.jpg" class="img-fluid" style="width: 60px; height: 60px; border-radius: 50%;">
+              <h6 class="text-center mt-3">C++</h6>
+            </div>
+          </div>
 
-        // Hide offcanvas first
-        bsOffcanvas.hide();
+          <div class="col-5 col-md-2 my-5 d-flex justify-content-center" id="skill8">
+            <div class="bg-light-subtle shadow-lg rounded d-flex flex-column align-items-center p-3"
+              style="width: 180px; height: 130px;">
+              <img src="./skills/vscode.jpg" class="img-fluid" style="width: 60px; height: 60px; border-radius: 50%;">
+              <h6 class="text-center mt-3">VS code</h6>
+            </div>
+          </div>
 
-        // Wait for offcanvas animation to finish (Bootstrap default 300ms)
-        setTimeout(() => {
-          const targetElem = document.querySelector(targetId);
-          if (targetElem) {
-            targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="container-fluide mb-0 p-1 mt-5 text-dark" id="connect">
+    <div class="text-center pt-3 pb-2">
+      <h3>Let's Connect</h3>
+      <p>Find me on these platforms, and let's connect!</p>
+    </div>
+    <div class="container  d-flex justify-content-center pb-2">
+      <div id="gmail" class="p-2 rounded">
+        <a href="mailto:dilsonbharath76@gmail.com" target="_blank"><img src="gmail.png"
+            style="width: 30px; height: 30px;"></a>
+      </div>
+      <div id="linked" class="p-2 rounded">
+        <a href="https://www.linkedin.com/in/dilson-bharath-r/" target="_blank"><img src="linkedin.png"
+            style="width: 30px; height: 30px;"></a>
+      </div>
+      <div id="insta" class="p-2 rounded">
+        <a href="https://www.instagram.com/dilsonbharath/" target="_blank"><img src="social.png"
+            style="width: 30px; height: 30px;"></a>
+      </div>
+
+      <div id="face" class="p-2 rounded">
+        <a href="https://www.facebook.com/dilson.bharath.7" target="_blank "><img src="facebook (1).png"
+            style="width: 30px; height: 30px;"></a>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const offcanvas = document.getElementById('offcanvasNavbar');
+      const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvas);
+
+      document.querySelectorAll('#offcanvasNavbar .nav-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+          const targetId = this.getAttribute('href'); // e.g., "#about"
+
+          // Only handle internal anchors
+          if (targetId && targetId.startsWith('#')) {
+            e.preventDefault(); // prevent default jump
+
+            // Hide offcanvas first
+            bsOffcanvas.hide();
+
+            // Wait for offcanvas animation to finish (Bootstrap default 300ms)
+            setTimeout(() => {
+              const targetElem = document.querySelector(targetId);
+              if (targetElem) {
+                targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 350); // slightly longer than offcanvas hide animation
           }
-        }, 350); // slightly longer than offcanvas hide animation
-      }
+        });
+      });
     });
-  });
-});
 
-    </script>
+  </script>
 
 
 
