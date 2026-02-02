@@ -311,13 +311,6 @@ const Journal = () => {
                   </button>
                 </div>
               </div>
-              <button
-                onClick={() => setShowRecent(!showRecent)}
-                className="flex items-center space-x-2 px-4 py-2 rounded-full bg-white border border-primary-100 shadow-sm hover:shadow-md transition"
-              >
-                <Book className="w-5 h-5 text-primary-700" />
-                <span className="text-sm font-semibold text-primary-800">Journal Library</span>
-              </button>
             </div>
           </div>
         </div>
@@ -384,14 +377,23 @@ const Journal = () => {
                     <span className="text-xs sm:text-sm text-neutral-600">
                       {saveStatus || (canEdit ? 'Click Save to store your changes' : 'Locked: only editable for current day/week/month')}
                     </span>
-                    <button
-                      onClick={handleSave}
-                      disabled={loading || !canEdit}
-                      className="flex items-center space-x-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium text-sm sm:text-base touch-manipulation"
-                    >
-                      <Save className="w-4 h-4" />
-                      <span>Save</span>
-                    </button>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={handleSave}
+                        disabled={loading || !canEdit}
+                        className="flex items-center space-x-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium text-sm sm:text-base touch-manipulation"
+                      >
+                        <Save className="w-4 h-4" />
+                        <span>Save</span>
+                      </button>
+                      <button
+                        onClick={() => setShowRecent(!showRecent)}
+                        className="flex items-center space-x-2 px-4 py-2 rounded-full bg-white border border-primary-100 shadow-sm hover:shadow-md transition"
+                      >
+                        <Book className="w-5 h-5 text-primary-700" />
+                        <span className="text-sm font-semibold text-primary-800">Journal Library</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
 

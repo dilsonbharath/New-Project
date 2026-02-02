@@ -19,6 +19,7 @@ class User(Base):
     daily_checkins: Mapped[List["DailyCheckIn"]] = relationship("DailyCheckIn", back_populates="user", cascade="all, delete-orphan")
     expenses: Mapped[List["Expense"]] = relationship("Expense", back_populates="user", cascade="all, delete-orphan")
     budgets: Mapped[List["MonthlyBudget"]] = relationship("MonthlyBudget", back_populates="user", cascade="all, delete-orphan")
+    daily_budgets: Mapped[List["DailyBudget"]] = relationship("DailyBudget", back_populates="user", cascade="all, delete-orphan")
 
 
 class Habit(Base):
@@ -82,7 +83,6 @@ class DailyCheckIn(Base):
 
 class Expense(Base):
     __tablename__ = "expenses"
-    __table_args__ = (UniqueConstraint("user_id", "expense_date", name="uq_user_expense_day"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), nullable=False)
@@ -108,3 +108,17 @@ class MonthlyBudget(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     user: Mapped["User"] = relationship("User", back_populates="budgets")
+
+
+class DailyBudget(Base):
+    __tablename__ = "daily_budgets"
+    __table_args__ = (UniqueConstraint("user_id", "budget_date", name="uq_user_budget_day"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), nullable=False)
+    date: Mapped[date] = mapped_column("budget_date", Date, nullable=False, index=True)
+    amount: Mapped[float] = mapped_column(Float, default=0)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    user: Mapped["User"] = relationship("User", back_populates="daily_budgets")

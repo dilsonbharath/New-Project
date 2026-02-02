@@ -2,7 +2,7 @@ import api from './api';
 
 export const authService = {
   async register(userData) {
-    const response = await api.post('/api/auth/register', userData);
+    const response = await api.post('/auth/register', userData);
     return response.data;
   },
 
@@ -11,7 +11,7 @@ export const authService = {
     formData.append('username', username);
     formData.append('password', password);
     
-    const response = await api.post('/api/auth/login', formData, {
+    const response = await api.post('/auth/login', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -25,7 +25,7 @@ export const authService = {
   },
 
   async getCurrentUser() {
-    const response = await api.get('/api/auth/me');
+    const response = await api.get('/auth/me');
     return response.data;
   },
 

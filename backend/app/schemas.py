@@ -164,6 +164,11 @@ class ExpenseCreate(ExpenseBase):
     pass
 
 
+class ExpenseUpdate(BaseModel):
+    amount: float = Field(..., gt=0)
+    note: Optional[str] = None
+
+
 class ExpenseResponse(ExpenseBase):
     id: int
     user_id: int
@@ -181,6 +186,21 @@ class BudgetUpdate(BaseModel):
 
 
 class BudgetResponse(BudgetUpdate):
+    id: int
+    user_id: int
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class DailyBudgetCreate(BaseModel):
+    date: date
+    amount: float = Field(..., ge=0)
+
+
+class DailyBudgetResponse(DailyBudgetCreate):
     id: int
     user_id: int
     created_at: datetime

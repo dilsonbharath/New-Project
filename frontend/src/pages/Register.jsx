@@ -503,6 +503,218 @@ const Register = () => {
         </div>
       </section>
 
+      {/* Section 4: Daily Login Streaks */}
+      <section className="py-32 px-4 bg-gradient-to-br from-primary-50 to-primary-100 relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary-200 rounded-full filter blur-3xl opacity-20"></div>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="order-2 md:order-1 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-100 to-primary-200 rounded-3xl transform rotate-3"></div>
+              <div className="relative surface-card rounded-3xl p-8">
+                <div className="mb-6 text-center">
+                  <div className="flex items-center justify-center space-x-8 mb-6">
+                    <div className="text-center">
+                      <div className="text-5xl font-black text-primary-600 mb-1">23</div>
+                      <div className="text-xs text-gray-500 uppercase tracking-wide">Current Streak</div>
+                      <div className="text-2xl mt-2">🔥</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-5xl font-black text-primary-600 mb-1">45</div>
+                      <div className="text-xs text-gray-500 uppercase tracking-wide">Best Streak</div>
+                      <div className="text-2xl mt-2">🏆</div>
+                    </div>
+                  </div>
+                  
+                  {/* Calendar Preview */}
+                  <div className="bg-primary-50 rounded-2xl p-4 border border-primary-100">
+                    <div className="text-sm font-bold text-primary-900 mb-3">February 2026</div>
+                    <div className="grid grid-cols-7 gap-2">
+                      {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map(day => (
+                        <div key={day} className="text-xs font-semibold text-gray-500 text-center">{day}</div>
+                      ))}
+                      {[...Array(28)].map((_, i) => (
+                        <div
+                          key={i}
+                          className={`aspect-square rounded-lg flex items-center justify-center text-xs font-bold ${
+                            i < 2 ? 'bg-green-100 ring-2 ring-green-400 text-green-800' : 
+                            i === 2 ? 'bg-blue-200 border-2 border-blue-500 text-blue-800' : 
+                            'bg-gray-100 text-gray-400'
+                          }`}
+                        >
+                          {i + 1}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 flex items-center justify-around text-xs">
+                      <div className="flex items-center space-x-1">
+                        <div className="w-3 h-3 bg-green-100 rounded ring-2 ring-green-400"></div>
+                        <span>Logged In</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <div className="w-3 h-3 bg-blue-200 border-2 border-blue-500 rounded"></div>
+                        <span>Today</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="order-1 md:order-2 space-y-6">
+              <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold">
+                DAILY LOGIN STREAK
+              </div>
+              <h2 className="text-5xl md:text-6xl font-black text-gray-900 leading-tight">
+                Show up every day, build momentum
+              </h2>
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Consistency is everything. Just logging in every day builds the discipline muscle. 
+                Watch your streak grow and never break the chain!
+              </p>
+              <div className="space-y-6 pt-4">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-700">
+                    <span className="text-2xl">📆</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">Calendar view</h3>
+                    <p className="text-gray-600">See your entire month at a glance. Green = you showed up!</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-700">
+                    <span className="text-2xl">🔥</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">Auto-tracked streaks</h3>
+                    <p className="text-gray-600">Login once a day, we'll count it. No extra work needed.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-700">
+                    <span className="text-2xl">🏆</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">Track your best</h3>
+                    <p className="text-gray-600">Beat your personal record. That's the real competition.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 5: Expense Tracking */}
+      <section className="py-32 px-4 bg-primary-50 relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div className="space-y-6">
+              <div className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold">
+                EXPENSE TRACKING
+              </div>
+              <h2 className="text-5xl md:text-6xl font-black text-gray-900 leading-tight">
+                Know where your money goes
+              </h2>
+              <p className="text-xl text-gray-600 leading-relaxed">
+                Financial discipline is self-discipline. Track your daily spending, set monthly budgets, 
+                and see exactly how much you're saving. No more wondering where the money went.
+              </p>
+              <div className="space-y-6 pt-4">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-700">
+                    <span className="text-2xl">💰</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">Set monthly budgets</h3>
+                    <p className="text-gray-600">Know your limit. Stay within it. Build financial discipline.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-700">
+                    <span className="text-2xl">📝</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">Daily expense logging</h3>
+                    <p className="text-gray-600">Quick entries with optional notes. Track every rupee you spend.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-700">
+                    <span className="text-2xl">📊</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">Visual progress tracking</h3>
+                    <p className="text-gray-600">See how much you've spent vs budget with instant progress bars.</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center text-primary-700">
+                    <span className="text-2xl">💎</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">Monthly savings</h3>
+                    <p className="text-gray-600">See exactly how much you saved. Celebrate those wins!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-100 to-primary-200 rounded-3xl transform -rotate-3"></div>
+              <div className="relative surface-card rounded-3xl p-8">
+                {/* Budget Overview */}
+                <div className="surface-card-soft rounded-2xl p-6 mb-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <div className="text-xs text-gray-500 uppercase tracking-wide font-semibold">February 2026</div>
+                      <div className="text-3xl font-black text-primary-600 mt-1">₹25,000</div>
+                      <div className="text-sm text-gray-600">Monthly Budget</div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xs text-gray-500 uppercase tracking-wide font-semibold">Saved</div>
+                      <div className="text-3xl font-black text-green-600 mt-1">₹8,500</div>
+                      <div className="text-sm text-gray-600">34% of budget</div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-primary-50 border border-primary-100 rounded-lg p-3">
+                    <div className="flex items-center justify-between text-sm text-primary-900 mb-2">
+                      <span>Spent this month</span>
+                      <span className="font-semibold">₹16,500</span>
+                    </div>
+                    <div className="h-3 bg-primary-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-primary-600" style={{width: '66%'}}></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recent Expenses */}
+                <div className="surface-card-soft rounded-2xl p-6">
+                  <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Recent Expenses</h4>
+                  <div className="space-y-3">
+                    {[
+                      { date: '02 Feb', note: 'Groceries', amount: '₹1,200' },
+                      { date: '01 Feb', note: 'Coffee & Snacks', amount: '₹350' },
+                      { date: '01 Feb', note: 'Transport', amount: '₹200' },
+                      { date: '31 Jan', note: 'Dinner', amount: '₹800' }
+                    ].map((expense, i) => (
+                      <div key={i} className="flex items-center justify-between bg-white/90 border border-primary-50 rounded-lg px-3 py-2">
+                        <div className="flex flex-col">
+                          <span className="text-sm text-gray-700">{expense.date}</span>
+                          <span className="text-xs text-gray-500">{expense.note}</span>
+                        </div>
+                        <span className="font-semibold text-primary-700">{expense.amount}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Signup Section */}
       <section id="signup-section" className="py-32 px-4 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 relative overflow-hidden">
         {/* Background Pattern */}

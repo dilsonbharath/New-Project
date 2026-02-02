@@ -17,42 +17,65 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    fetchCheckIns();
+    // Record check-in and then fetch data
+    const initializeProfile = async () => {
+      await recordTodayCheckIn();
+      await fetchCheckIns();
+      await fetchStats();
+    };
+    initializeProfile();
   }, [currentDate]);
+
+  const recordTodayCheckIn = async () => {
+    try {
+      const { checkinService } = await import('../services/checkinService');
+      await checkinService.recordCheckin();
+      console.log('✅ Check-in recorded for today');
+    } catch (error) {
+      console.error('❌ Failed to record check-in:', error);
+    }
+  };
 
   const fetchCheckIns = async () => {
     try {
       setLoading(true);
       
-      // Simulate API call - replace with actual API
-      const mockCheckIns = [
-        '2026-02-01',
-        '2026-01-31',
-        '2026-01-30',
-        '2026-01-29',
-        '2026-01-28',
-        '2026-01-25',
-        '2026-01-24',
-        '2026-01-23'
-      ];
+      // Import checkinService
+      const { checkinService } = await import('../services/checkinService');
       
-      setCheckIns(new Set(mockCheckIns));
+      // Get year and month from currentDate
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth() + 1;
       
-      // Calculate stats
-      const today = format(new Date(), 'yyyy-MM-dd');
-      const thisMonth = format(currentDate, 'yyyy-MM');
-      const thisMonthCount = mockCheckIns.filter(date => date.startsWith(thisMonth)).length;
+      console.log(`📅 Fetching check-ins for ${year}-${month}`);
       
-      setStats({
-        totalCheckIns: mockCheckIns.length,
-        currentStreak: 4, // Mock current streak
-        longestStreak: 7, // Mock longest streak
-        thisMonthCheckIns: thisMonthCount
-      });
+      // Fetch actual check-ins from API
+      const response = await checkinService.getMonthlyCheckins(year, month);
+      console.log('✅ Check-ins fetched:', response.checkins);
+      setCheckIns(new Set(response.checkins));
     } catch (error) {
-      console.error('Failed to fetch check-ins:', error);
+      console.error('❌ Failed to fetch check-ins:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchStats = async () => {
+    try {
+      // Import checkinService
+      const { checkinService } = await import('../services/checkinService');
+      
+      // Fetch actual stats from API
+      const statsData = await checkinService.getStats();
+      console.log('✅ Stats fetched:', statsData);
+      setStats({
+        totalCheckIns: statsData.total_checkins,
+        currentStreak: statsData.current_streak,
+        longestStreak: statsData.longest_streak,
+        thisMonthCheckIns: statsData.this_month_checkins
+      });
+    } catch (error) {
+      console.error('❌ Failed to fetch stats:', error);
     }
   };
 
@@ -184,16 +207,22 @@ const Profile = () => {
             {/* Calendar Legend */}
             <div className="flex items-center space-x-6 mb-4 text-sm">
               <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-green-500 rounded"></div>
-                <span>Checked In</span>
+                <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center ring-2 ring-green-400">
+                  <span className="text-xs font-bold">1</span>
+                </div>
+                <span>Logged In (Green Circle)</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-blue-100 border-2 border-blue-300 rounded"></div>
+                <div className="w-8 h-8 bg-red-50 rounded-lg flex items-center justify-center ring-2 ring-red-400">
+                  <span className="text-xs font-bold">1</span>
+                </div>
+                <span>Missed (Red Circle)</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-blue-100 border-2 border-blue-500 rounded-lg flex items-center justify-center">
+                  <span className="text-xs font-bold text-blue-700">T</span>
+                </div>
                 <span>Today</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-4 h-4 bg-red-50 rounded"></div>
-                <span>Missed</span>
               </div>
             </div>
 
@@ -209,18 +238,44 @@ const Profile = () => {
               {/* Calendar days */}
               {getDaysInMonth().map(date => {
                 const dateStr = format(date, 'yyyy-MM-dd');
-                const dayStatus = getDayStatus(date);
                 const isCheckedIn = isDayCheckedIn(date);
+                const isTodayDate = isToday(date);
+                const isPastDate = isBefore(date, new Date());
+                const isCurrentMonth = format(date, 'MM') === format(currentDate, 'MM');
+                const shouldShowStatus = isCurrentMonth && (isPastDate || isTodayDate);
+                
+                // Determine styling
+                let cellClasses = 'aspect-square rounded-lg flex flex-col items-center justify-center text-sm font-medium transition-all cursor-default relative ';
+                
+                if (!isCurrentMonth) {
+                  cellClasses += 'text-gray-300 bg-gray-50';
+                } else if (isTodayDate) {
+                  // Today with blue border
+                  cellClasses += 'bg-blue-100 text-blue-700 font-bold border-2 border-blue-500';
+                } else {
+                  cellClasses += 'text-gray-700';
+                }
+                
+                // Add green circle for logged in days
+                if (shouldShowStatus && isCheckedIn && !isTodayDate) {
+                  cellClasses += ' ring-2 ring-green-400 bg-green-50';
+                } else if (shouldShowStatus && !isCheckedIn && !isTodayDate) {
+                  cellClasses += ' ring-2 ring-red-400 bg-red-50';
+                }
+                
+                // Add green circle to today if logged in
+                if (isTodayDate && isCheckedIn) {
+                  cellClasses += ' ring-2 ring-green-500';
+                } else if (isTodayDate && !isCheckedIn && isCurrentMonth) {
+                  cellClasses += ' ring-2 ring-red-500';
+                }
                 
                 return (
                   <div
                     key={dateStr}
-                    className={`aspect-square rounded-lg flex items-center justify-center text-sm font-medium transition-all cursor-default relative ${dayStatus}`}
+                    className={cellClasses}
                   >
                     <span>{format(date, 'd')}</span>
-                    {isCheckedIn && (
-                      <CheckCircle className="w-3 h-3 text-white absolute top-0.5 right-0.5" />
-                    )}
                   </div>
                 );
               })}
@@ -234,7 +289,7 @@ const Profile = () => {
                   <p className="text-gray-600">
                     {isDayCheckedIn(new Date()) 
                       ? '✅ You\'re checked in for today! Keep the streak going!' 
-                      : '⏰ You\'re logged in right now - check-in recorded!'
+                      : '⏰ Keep visiting daily to maintain your streak!'
                     }
                   </p>
                 </div>

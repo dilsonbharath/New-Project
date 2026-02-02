@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Journal from './pages/Journal';
 import NewSkill from './pages/NewSkill';
 import Expenses from './pages/Expenses';
+import Profile from './pages/Profile';
 import './index.css';
 
 function App() {
@@ -46,6 +47,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Expenses />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

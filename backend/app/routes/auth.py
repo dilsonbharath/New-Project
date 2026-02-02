@@ -45,6 +45,9 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 @router.post("/login", response_model=schemas.Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     """Authenticate user and return JWT token"""
+    from datetime import date
+    from ..models import DailyCheckIn
+    
     user = crud.authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -52,6 +55,21 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    
+    # Auto-record daily check-in on login
+    today = date.today()
+    existing_checkin = db.query(DailyCheckIn).filter(
+        DailyCheckIn.user_id == user.id,
+        DailyCheckIn.check_in_date == today
+    ).first()
+    
+    if not existing_checkin:
+        checkin = DailyCheckIn(
+            user_id=user.id,
+            check_in_date=today
+        )
+        db.add(checkin)
+        db.commit()
     
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(

@@ -1,7 +1,7 @@
 import { LogOut, User, BookOpen, LayoutDashboard, Target, Calendar, ChevronDown, ChevronLeft, ChevronRight, CheckCircle, Flame, Trophy, PiggyBank } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isToday, isBefore, startOfWeek, endOfWeek } from 'date-fns';
 import { checkinService } from '../services/checkinService';
 
@@ -20,40 +20,71 @@ const Navbar = () => {
   });
   const [loading, setLoading] = useState(false);
 
+  console.log('🔵 Navbar render - user:', user?.username, 'showCalendar:', showCalendar);
+
   const isActive = (path) => location.pathname === path;
 
-  // Record check-in and load data when component mounts
-  useEffect(() => {
-    if (user) {
-      recordTodayCheckin();
-      loadCheckinData();
-    }
-  }, [user]);
-
-  const recordTodayCheckin = async () => {
+  const recordTodayCheckin = useCallback(async () => {
     try {
-      await checkinService.recordCheckin();
+      const response = await checkinService.recordCheckin();
+      console.log('✅ Check-in recorded successfully:', response);
     } catch (error) {
-      console.error('Failed to record check-in:', error);
+      console.error('❌ Failed to record check-in:', error);
+      console.error('❌ Error details:', error.response?.data || error.message);
     }
-  };
+  }, []);
 
-  const loadCheckinData = async () => {
+  const loadCheckinData = useCallback(async () => {
     try {
       setLoading(true);
+      console.log('🔍 Loading data for:', currentDate.getFullYear(), currentDate.getMonth() + 1);
+      
       const [monthlyData, statsData] = await Promise.all([
         checkinService.getMonthlyCheckins(currentDate.getFullYear(), currentDate.getMonth() + 1),
         checkinService.getStats()
       ]);
       
+      console.log('📅 Raw monthly data:', monthlyData);
+      console.log('📅 Check-ins loaded:', monthlyData.checkins);
+      console.log('📊 Stats loaded:', statsData);
+      
       setCheckins(new Set(monthlyData.checkins));
-      setStats(statsData);
+      setStats({
+        totalCheckins: statsData.total_checkins || 0,
+        currentStreak: statsData.current_streak || 0,
+        longestStreak: statsData.longest_streak || 0,
+        thisMonthCheckins: statsData.this_month_checkins || 0
+      });
+      
+      console.log('✅ State updated - checkins Set has', monthlyData.checkins.length, 'items');
     } catch (error) {
-      console.error('Failed to load check-in data:', error);
+      console.error('❌ Failed to load check-in data:', error);
+      console.error('❌ Error response:', error.response?.data);
+      console.error('❌ Error status:', error.response?.status);
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentDate]);
+
+  // Load check-in data when component mounts or user changes
+  useEffect(() => {
+    console.log('🚀 Navbar mounted/user changed, user:', user?.username);
+    if (user) {
+      console.log('📅 Loading check-in data...');
+      loadCheckinData();
+    } else {
+      console.log('⚠️ No user found, skipping data load');
+    }
+  }, [user, loadCheckinData]);
+
+  // Reload calendar data when it's opened
+  useEffect(() => {
+    console.log('🔄 Calendar state changed:', showCalendar, 'user:', user?.username);
+    if (showCalendar && user) {
+      console.log('🔄 Calendar opened, loading data...');
+      loadCheckinData();
+    }
+  }, [showCalendar, user, loadCheckinData]);
 
   const navigateMonth = async (direction) => {
     const newDate = new Date(currentDate);
@@ -79,7 +110,11 @@ const Navbar = () => {
 
   const isDayCheckedIn = (date) => {
     const dateStr = format(date, 'yyyy-MM-dd');
-    return checkins.has(dateStr);
+    const isChecked = checkins.has(dateStr);
+    if (isToday(date)) {
+      console.log(`🔍 Checking today (${dateStr}):`, isChecked, 'All checkins:', Array.from(checkins));
+    }
+    return isChecked;
   };
 
   const getDayStatus = (date) => {
@@ -206,23 +241,24 @@ const Navbar = () => {
               </button>
             </div>
 
-            <div className="hidden sm:flex items-center space-x-2 text-primary-50 relative">
-              <User className="w-4 h-4 sm:w-5 sm:h-5" />
-              <button
-                onClick={() => setShowCalendar(!showCalendar)}
-                className="font-medium text-sm sm:text-base flex items-center space-x-1 hover:bg-primary-800/60 px-2 py-1 rounded-lg transition-colors"
-              >
-                <span>{user?.username}</span>
-                <div className="flex items-center space-x-1 text-xs">
-                  <Flame className="w-3 h-3 text-orange-500" />
-                  <span>{stats.currentStreak}</span>
-                </div>
-                <ChevronDown className="w-3 h-3" />
-              </button>
-              
-              {/* Calendar Dropdown */}
-              {showCalendar && (
-                <div className="absolute top-full right-0 mt-2 surface-card rounded-xl p-4 z-50 w-80">
+            <div className="hidden sm:flex items-center space-x-2">
+              <div className="relative">
+                <button
+                  onClick={() => setShowCalendar(!showCalendar)}
+                  className="font-medium text-sm sm:text-base flex items-center space-x-1 hover:bg-primary-800/60 px-2 py-1 rounded-lg transition-colors text-primary-50"
+                >
+                  <User className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span>{user?.username}</span>
+                  <div className="flex items-center space-x-1 text-xs">
+                    <Flame className="w-3 h-3 text-orange-500" />
+                    <span>{stats.currentStreak}</span>
+                  </div>
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+                
+                {/* Calendar Dropdown */}
+                {showCalendar && (
+                  <div className="absolute top-full right-0 mt-2 surface-card rounded-xl p-4 z-50 w-80">
                   {/* Stats */}
                   <div className="grid grid-cols-3 gap-2 mb-4">
                     <div className="text-center">
@@ -277,18 +313,43 @@ const Navbar = () => {
                     
                     {getDaysInMonth().map(date => {
                       const dateStr = format(date, 'yyyy-MM-dd');
-                      const dayStatus = getDayStatus(date);
                       const isCheckedIn = isDayCheckedIn(date);
+                      const isTodayDate = isToday(date);
+                      const isPastDate = isBefore(date, new Date());
+                      const isCurrentMonth = format(date, 'MM') === format(currentDate, 'MM');
+                      const shouldShowStatus = isCurrentMonth && (isPastDate || isTodayDate);
+                      
+                      // Determine styling
+                      let cellClasses = 'aspect-square rounded text-xs flex items-center justify-center relative ';
+                      
+                      if (!isCurrentMonth) {
+                        cellClasses += 'text-gray-400 dark:text-gray-600';
+                      } else if (isTodayDate) {
+                        cellClasses += 'bg-blue-200 text-blue-800 font-bold border-2 border-blue-500';
+                      } else {
+                        cellClasses += 'text-primary-100';
+                      }
+                      
+                      // Add green circle for logged in days
+                      if (shouldShowStatus && isCheckedIn && !isTodayDate) {
+                        cellClasses += ' ring-2 ring-green-400 bg-green-100 text-green-800';
+                      } else if (shouldShowStatus && !isCheckedIn && !isTodayDate) {
+                        cellClasses += ' ring-2 ring-red-400 bg-red-100 text-red-800';
+                      }
+                      
+                      // Add green/red circle to today if logged in/not logged in
+                      if (isTodayDate && isCheckedIn) {
+                        cellClasses += ' ring-2 ring-green-500';
+                      } else if (isTodayDate && !isCheckedIn && isCurrentMonth) {
+                        cellClasses += ' ring-2 ring-red-500';
+                      }
                       
                       return (
                         <div
                           key={dateStr}
-                          className={`aspect-square rounded text-xs flex items-center justify-center relative ${dayStatus}`}
+                          className={cellClasses}
                         >
                           <span>{format(date, 'd')}</span>
-                          {isCheckedIn && (
-                            <CheckCircle className="w-2 h-2 text-white absolute top-0 right-0" />
-                          )}
                         </div>
                       );
                     })}
@@ -297,26 +358,31 @@ const Navbar = () => {
                   {/* Legend */}
                   <div className="flex items-center justify-between text-xs text-primary-100/80">
                     <div className="flex items-center space-x-1">
-                      <div className="w-2 h-2 bg-green-500 rounded"></div>
+                      <div className="w-3 h-3 bg-green-100 rounded ring-2 ring-green-400"></div>
                       <span>Logged In</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <div className="w-2 h-2 bg-blue-200 border border-blue-500 rounded"></div>
+                      <div className="w-3 h-3 bg-red-100 rounded ring-2 ring-red-400"></div>
+                      <span>Missed</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-3 h-3 bg-blue-200 border-2 border-blue-500 rounded"></div>
                       <span>Today</span>
                     </div>
                   </div>
                 </div>
               )}
+              </div>
+              
+              <button
+                onClick={logout}
+                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1.5 sm:py-2 text-primary-50 hover:bg-primary-800/60 rounded-lg transition-colors text-sm sm:text-base"
+                title="Logout"
+              >
+                <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="hidden sm:inline">Logout</span>
+              </button>
             </div>
-            
-            <button
-              onClick={logout}
-              className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1.5 sm:py-2 text-primary-50 hover:bg-primary-800/60 rounded-lg transition-colors text-sm sm:text-base"
-              title="Logout"
-            >
-              <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="hidden sm:inline">Logout</span>
-            </button>
           </div>
         </div>
       </div>

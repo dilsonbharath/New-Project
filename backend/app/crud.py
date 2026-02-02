@@ -268,3 +268,72 @@ def upsert_expense_for_date(db: Session, user_id: int, expense_date: date, amoun
     db.commit()
     db.refresh(expense)
     return expense
+
+
+def create_expense(db: Session, user_id: int, expense_date: date, amount: float, note: Optional[str] = None) -> models.Expense:
+    """Create a new expense entry (allows multiple per day)"""
+    expense = models.Expense(
+        user_id=user_id,
+        date=expense_date,
+        amount=amount,
+        note=note
+    )
+    db.add(expense)
+    db.commit()
+    db.refresh(expense)
+    return expense
+
+
+def update_expense(db: Session, expense_id: int, user_id: int, amount: float, note: Optional[str] = None) -> Optional[models.Expense]:
+    """Update an existing expense"""
+    expense = db.query(models.Expense).filter(
+        models.Expense.id == expense_id,
+        models.Expense.user_id == user_id
+    ).first()
+    
+    if expense:
+        expense.amount = amount
+        expense.note = note
+        db.commit()
+        db.refresh(expense)
+    
+    return expense
+
+
+def delete_expense(db: Session, expense_id: int, user_id: int) -> bool:
+    """Delete an expense"""
+    expense = db.query(models.Expense).filter(
+        models.Expense.id == expense_id,
+        models.Expense.user_id == user_id
+    ).first()
+    
+    if expense:
+        db.delete(expense)
+        db.commit()
+        return True
+    
+    return False
+
+
+def get_daily_budget(db: Session, user_id: int, budget_date: date) -> Optional[models.DailyBudget]:
+    return db.query(models.DailyBudget).filter(
+        models.DailyBudget.user_id == user_id,
+        models.DailyBudget.date == budget_date
+    ).first()
+
+
+def upsert_daily_budget(db: Session, user_id: int, budget_date: date, amount: float) -> models.DailyBudget:
+    daily_budget = get_daily_budget(db, user_id, budget_date)
+    if daily_budget:
+        daily_budget.amount = amount
+    else:
+        daily_budget = models.DailyBudget(
+            user_id=user_id,
+            date=budget_date,
+            amount=amount
+        )
+        db.add(daily_budget)
+    
+    db.commit()
+    db.refresh(daily_budget)
+    return daily_budget
