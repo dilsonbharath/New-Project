@@ -6,11 +6,11 @@ from .config import get_settings
 settings = get_settings()
 
 database_connect_args = {}
-if settings.DATABASE_URL.startswith("sqlite"):
+if settings.normalized_database_url.startswith("sqlite"):
     database_connect_args["check_same_thread"] = False
 
 engine = create_engine(
-    settings.DATABASE_URL,
+    settings.normalized_database_url,
     connect_args=database_connect_args
 )
 
