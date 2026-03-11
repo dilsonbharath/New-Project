@@ -46,7 +46,7 @@ jobs:
         env:
           VITE_API_URL: https://new-project-1-xg16.onrender.com/api
           VITE_ROUTER_MODE: hash
-          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+          VITE_BASE_PATH: /
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
