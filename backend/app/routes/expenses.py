@@ -33,7 +33,7 @@ def get_monthly_expenses(
     budget_amount = budget.amount if budget else 0.0
     saved = max(budget_amount - total_spent, 0)
 
-    summary_expenses = [schemas.ExpenseResponse.from_orm(exp) for exp in expenses]
+    summary_expenses = [schemas.ExpenseResponse.model_validate(exp) for exp in expenses]
 
     return schemas.ExpenseSummary(
         month=resolved_month,
