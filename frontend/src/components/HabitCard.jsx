@@ -1,93 +1,68 @@
-import { useState } from 'react';
-import { Info, Edit2, Trash2, MoreVertical } from 'lucide-react';
+import { Check, Edit3, Trash2 } from 'lucide-react';
 
-const HabitCard = ({ habit, onToggle, onEdit, onDelete, isCompleted }) => {
-  const [showInfo, setShowInfo] = useState(false);
-  const [showActions, setShowActions] = useState(false);
-
+const HabitCard = ({ habit, isCompleted, onToggle, onEdit, onDelete }) => {
   return (
-    <div className="surface-card-soft rounded-lg p-2 sm:p-3 hover:shadow-soft transition-all duration-200">
-      <div className="flex items-start justify-between">
-        <div className="flex items-start space-x-2 flex-1">
-          <button
-            onClick={onToggle}
-            className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs sm:text-sm transition-all duration-200 ${
-              isCompleted
-                ? 'bg-primary-500 text-white scale-105'
-                : 'bg-primary-900/40 text-primary-50 hover:bg-primary-800/80 active:scale-95'
-            }`}
-          >
-            {isCompleted ? '✓' : habit.icon}
-          </button>
-          
-          <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-1 sm:gap-2">
-              <h3 className={`font-semibold text-sm sm:text-base break-words ${isCompleted ? 'text-primary-100' : 'text-primary-50'}`}>
-                {habit.name}
-              </h3>
-            </div>
-            
-            {habit.description && (
-              <p className="text-primary-100/80 text-xs mt-1 line-clamp-1">{habit.description}</p>
-            )}
-          </div>
+    <div className="group flex items-center gap-4 py-4 px-1 border-b border-neutral-100 last:border-0 transition-colors hover:bg-neutral-50/50 rounded-lg">
+      {/* Toggle */}
+      <button
+        onClick={onToggle}
+        className={`flex-shrink-0 w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all ${
+          isCompleted
+            ? 'bg-primary-500 border-primary-500 text-white scale-105'
+            : 'border-neutral-200 hover:border-primary-300 text-transparent hover:text-primary-200'
+        }`}
+      >
+        <Check className="w-5 h-5" />
+      </button>
+
+      {/* Icon + Info */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2">
+          <span className="text-xl">{habit.icon}</span>
+          <h4 className={`font-semibold text-[15px] ${isCompleted ? 'text-neutral-400 line-through' : 'text-neutral-800'}`}>
+            {habit.name}
+          </h4>
         </div>
-        <div className="flex items-center gap-1.5 ml-2 relative">
-          <button
-            type="button"
-            onClick={() => setShowInfo((open) => !open)}
-            className="p-1.5 rounded-full bg-white/90 text-primary-800 border border-primary-200 hover:bg-white shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-400/70"
-            aria-label="Show habit stats"
-          >
-            <Info className="w-4 h-4" />
-          </button>
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setShowActions((open) => !open)}
-              className="p-1.5 rounded-full bg-white/90 text-primary-800 border border-primary-200 hover:bg-white shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-primary-400/70"
-              aria-label="More actions"
-            >
-              <MoreVertical className="w-4 h-4" />
-            </button>
-            {showActions && (
-              <div className="absolute right-0 top-10 w-40 rounded-xl bg-white border border-neutral-300 shadow-xl p-2.5 z-50 space-y-2">
-                <button
-                  type="button"
-                  onClick={() => { setShowActions(false); onEdit && onEdit(); }}
-                  className="w-full inline-flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-900 font-semibold rounded-lg hover:bg-neutral-100"
-                >
-                  <Edit2 className="w-4 h-4 text-primary-700" />
-                  <span>Edit habit</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { setShowActions(false); onDelete && onDelete(); }}
-                  className="w-full inline-flex items-center gap-2 px-2.5 py-2 text-sm text-red-700 rounded-lg hover:bg-red-50"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  <span>Delete habit</span>
-                </button>
-              </div>
-            )}
+        {habit.description && (
+          <p className="text-sm text-neutral-400 mt-0.5 truncate">{habit.description}</p>
+        )}
+      </div>
+
+      {/* Stats */}
+      <div className="hidden sm:flex items-center gap-3 text-xs mr-2">
+        {habit.current_streak > 0 && (
+          <div className="flex items-center gap-1 text-primary-500 font-semibold">
+            <span>🔥</span>
+            <span>{habit.current_streak}</span>
           </div>
-          {showInfo && (
-            <div className="absolute right-0 top-10 w-56 rounded-xl bg-white border border-neutral-300 shadow-xl p-3.5 z-50">
-              <div className="flex items-center justify-between text-sm text-neutral-900 mb-2">
-                <span>Current streak</span>
-                <span className="font-semibold text-primary-700">{habit.current_streak ?? 0}</span>
-              </div>
-              <div className="flex items-center justify-between text-sm text-neutral-900 mb-2">
-                <span>Best streak</span>
-                <span className="font-semibold text-primary-700">{habit.longest_streak ?? 0}</span>
-              </div>
-              <div className="flex items-center justify-between text-sm text-neutral-900">
-                <span>Total checks</span>
-                <span className="font-semibold text-primary-700">{habit.total_completions ?? 0}</span>
-              </div>
-            </div>
-          )}
+        )}
+        {habit.longest_streak > 0 && (
+          <div className="flex items-center gap-1 text-amber-500 font-semibold">
+            <span>🏆</span>
+            <span>{habit.longest_streak}</span>
+          </div>
+        )}
+        <div className="text-neutral-400">
+          {Math.round(habit.completion_rate)}%
         </div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+        <button
+          onClick={onEdit}
+          className="p-1.5 rounded-lg hover:bg-neutral-100 text-neutral-400 hover:text-neutral-600 transition-colors"
+          title="Edit"
+        >
+          <Edit3 className="w-3.5 h-3.5" />
+        </button>
+        <button
+          onClick={onDelete}
+          className="p-1.5 rounded-lg hover:bg-red-50 text-neutral-400 hover:text-red-500 transition-colors"
+          title="Delete"
+        >
+          <Trash2 className="w-3.5 h-3.5" />
+        </button>
       </div>
     </div>
   );

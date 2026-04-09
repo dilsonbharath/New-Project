@@ -1,96 +1,94 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
-const HabitModal = ({ isOpen, onClose, onSubmit, habit = null }) => {
+const icons = ['⭐', '🎯', '💪', '📚', '🧘', '🏃', '💻', '🎨', '🎸', '✍️', '🧠', '💤', '🥗', '💧', '🌅', '🔥', '📝', '🎓', '🏋️', '🚴'];
+
+const HabitModal = ({ isOpen, onClose, onSubmit, habit }) => {
   const [formData, setFormData] = useState({
-    name: habit?.name || '',
-    description: habit?.description || '',
-    icon: habit?.icon || '⭐',
-    color: habit?.color || '#22c55e',
-    target_days: habit?.target_days || 7
+    name: '',
+    description: '',
+    icon: '⭐',
+    color: '#f97352',
+    target_days: 7
   });
 
-  const icons = ['⭐', '🎯', '💪', '📚', '🧘', '🏃', '💧', '🎨', '🎵', '🌱', '🔬', '✍️'];
-  const colors = [
-    '#f0fdf4', '#dcfce7', '#bbf7d0', '#86efac',
-    '#4ade80', '#22c55e', '#15803d'
-  ];
+  useEffect(() => {
+    if (habit) {
+      setFormData({
+        name: habit.name || '',
+        description: habit.description || '',
+        icon: habit.icon || '⭐',
+        color: habit.color || '#f97352',
+        target_days: habit.target_days || 7
+      });
+    } else {
+      setFormData({ name: '', description: '', icon: '⭐', color: '#f97352', target_days: 7 });
+    }
+  }, [habit, isOpen]);
+
+  if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'target_days' ? parseInt(value) : value
-    }));
-  };
-
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
-      <div className="surface-card rounded-lg shadow-xl max-w-md w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-primary-800/60 sticky top-0 surface-card z-10">
-          <h2 className="text-xl sm:text-2xl font-bold text-primary-50">
-            {habit ? 'Edit Habit' : 'Create New Habit'}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" onClick={onClose} />
+
+      {/* Modal */}
+      <div className="relative bg-white rounded-2xl w-full max-w-md p-6 shadow-float animate-fade-in-up">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-bold text-neutral-800">
+            {habit ? 'Edit Habit' : 'New Habit'}
           </h2>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-primary-800/60 active:bg-primary-900/70 rounded-lg transition-colors touch-manipulation"
-            aria-label="Close"
-          >
-            <X className="w-5 h-5 text-primary-100" />
+          <button onClick={onClose} className="p-1.5 hover:bg-neutral-100 rounded-lg transition-colors">
+            <X className="w-5 h-5 text-neutral-400" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-primary-100 mb-1.5 sm:mb-2">
-              Habit Name *
-            </label>
+            <label className="block text-sm font-medium text-neutral-600 mb-1.5">Habit Name</label>
             <input
               type="text"
-              name="name"
               value={formData.name}
-              onChange={handleChange}
+              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              className="input-clean"
+              placeholder="e.g. Morning workout"
               required
-              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base input-surface rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-              placeholder="e.g., Morning Exercise"
             />
           </div>
 
+          {/* Description */}
           <div>
-            <label className="block text-sm font-medium text-primary-100 mb-1.5 sm:mb-2">
-              Description
-            </label>
-            <textarea
-              name="description"
+            <label className="block text-sm font-medium text-neutral-600 mb-1.5">Description (optional)</label>
+            <input
+              type="text"
               value={formData.description}
-              onChange={handleChange}
-              rows="3"
-              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base input-surface rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none resize-none"
-              placeholder="Optional description..."
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              className="input-clean"
+              placeholder="e.g. 30 minutes of exercise"
             />
           </div>
 
+          {/* Icon */}
           <div>
-            <label className="block text-sm font-medium text-primary-100 mb-1.5 sm:mb-2">
-              Choose an Icon
-            </label>
-            <div className="grid grid-cols-6 sm:grid-cols-6 gap-1.5 sm:gap-2">
-              {icons.map((icon) => (
+            <label className="block text-sm font-medium text-neutral-600 mb-1.5">Icon</label>
+            <div className="flex flex-wrap gap-2">
+              {icons.map(icon => (
                 <button
                   key={icon}
                   type="button"
-                  onClick={() => setFormData(prev => ({ ...prev, icon }))}
-                  className={`p-2 sm:p-3 text-xl sm:text-2xl rounded-lg border-2 transition-all touch-manipulation ${
+                  onClick={() => setFormData({...formData, icon})}
+                  className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg transition-all ${
                     formData.icon === icon
-                      ? 'border-primary-400 bg-primary-900/30 scale-105 sm:scale-110'
-                      : 'border-primary-900/40 hover:border-primary-800 active:bg-primary-900/40'
+                      ? 'bg-primary-100 ring-2 ring-primary-400 scale-110'
+                      : 'bg-neutral-50 hover:bg-neutral-100'
                   }`}
                 >
                   {icon}
@@ -99,56 +97,32 @@ const HabitModal = ({ isOpen, onClose, onSubmit, habit = null }) => {
             </div>
           </div>
 
+          {/* Target Days */}
           <div>
-            <label className="block text-sm font-medium text-primary-100 mb-1.5 sm:mb-2">
-              Choose a Color
+            <label className="block text-sm font-medium text-neutral-600 mb-1.5">
+              Target days per week: <span className="text-primary-500 font-bold">{formData.target_days}</span>
             </label>
-            <div className="grid grid-cols-6 sm:grid-cols-8 gap-1.5 sm:gap-2">
-              {colors.map((color) => (
-                <button
-                  key={color}
-                  type="button"
-                  onClick={() => setFormData(prev => ({ ...prev, color }))}
-                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg border-2 transition-all touch-manipulation ${
-                    formData.color === color
-                      ? 'border-primary-200 scale-105 sm:scale-110'
-                      : 'border-primary-900/40 active:border-primary-700'
-                  }`}
-                  style={{ backgroundColor: color }}
-                  aria-label={`Color ${color}`}
-                />
-              ))}
+            <input
+              type="range"
+              min="1"
+              max="7"
+              value={formData.target_days}
+              onChange={(e) => setFormData({...formData, target_days: parseInt(e.target.value)})}
+              className="w-full accent-primary-500"
+            />
+            <div className="flex justify-between text-xs text-neutral-400 mt-1">
+              <span>1 day</span>
+              <span>7 days</span>
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-primary-100 mb-1.5 sm:mb-2">
-              Target Days per Week
-            </label>
-            <input
-              type="number"
-              name="target_days"
-              value={formData.target_days}
-              onChange={handleChange}
-              min="1"
-              max="7"
-              className="w-full px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base input-surface rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none"
-            />
-          </div>
-
-          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 pt-3 sm:pt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-full sm:flex-1 px-4 py-2.5 sm:py-2 text-sm sm:text-base border border-primary-700 rounded-lg text-primary-50 hover:bg-primary-800/60 active:bg-primary-900/70 transition-colors font-medium touch-manipulation"
-            >
+          {/* Buttons */}
+          <div className="flex gap-3 pt-2">
+            <button type="button" onClick={onClose} className="btn-secondary flex-1">
               Cancel
             </button>
-            <button
-              type="submit"
-              className="w-full sm:flex-1 px-4 py-2.5 sm:py-2 text-sm sm:text-base bg-primary-500 text-white rounded-lg hover:bg-primary-600 active:bg-primary-700 transition-colors font-medium touch-manipulation"
-            >
-              {habit ? 'Update' : 'Create'} Habit
+            <button type="submit" className="btn-primary flex-1">
+              {habit ? 'Update' : 'Create'}
             </button>
           </div>
         </form>

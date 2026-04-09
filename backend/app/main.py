@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .database import engine, Base
 from .config import get_settings
 from .routes import auth, habits, logs, progress, journal
-from .routes import checkins, expenses
+from .routes import checkins, expenses, chatbot
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -32,6 +32,7 @@ app.include_router(progress.router, prefix="/api/progress", tags=["Progress"])
 app.include_router(journal.router, prefix="/api/journal", tags=["Journal"])
 app.include_router(checkins.router, prefix="/api", tags=["Daily Check-ins"])
 app.include_router(expenses.router, prefix="/api/expenses", tags=["Expenses"])
+app.include_router(chatbot.router, prefix="/api/chat", tags=["Chatbot"])
 
 
 @app.get("/")

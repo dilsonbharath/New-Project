@@ -1,4 +1,4 @@
-import { LogOut, User, BookOpen, LayoutDashboard, Target, Calendar, ChevronDown, ChevronLeft, ChevronRight, CheckCircle, Flame, Trophy, PiggyBank } from 'lucide-react';
+import { LogOut, User, BookOpen, LayoutDashboard, Target, ChevronDown, ChevronLeft, ChevronRight, Flame, Trophy, Calendar, PiggyBank, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
@@ -18,36 +18,15 @@ const Navbar = () => {
     longestStreak: 0,
     thisMonthCheckins: 0
   });
-  const [loading, setLoading] = useState(false);
-
-  console.log('🔵 Navbar render - user:', user?.username, 'showCalendar:', showCalendar);
 
   const isActive = (path) => location.pathname === path;
 
-  const recordTodayCheckin = useCallback(async () => {
-    try {
-      const response = await checkinService.recordCheckin();
-      console.log('✅ Check-in recorded successfully:', response);
-    } catch (error) {
-      console.error('❌ Failed to record check-in:', error);
-      console.error('❌ Error details:', error.response?.data || error.message);
-    }
-  }, []);
-
   const loadCheckinData = useCallback(async () => {
     try {
-      setLoading(true);
-      console.log('🔍 Loading data for:', currentDate.getFullYear(), currentDate.getMonth() + 1);
-      
       const [monthlyData, statsData] = await Promise.all([
         checkinService.getMonthlyCheckins(currentDate.getFullYear(), currentDate.getMonth() + 1),
         checkinService.getStats()
       ]);
-      
-      console.log('📅 Raw monthly data:', monthlyData);
-      console.log('📅 Check-ins loaded:', monthlyData.checkins);
-      console.log('📊 Stats loaded:', statsData);
-      
       setCheckins(new Set(monthlyData.checkins));
       setStats({
         totalCheckins: statsData.total_checkins || 0,
@@ -55,42 +34,23 @@ const Navbar = () => {
         longestStreak: statsData.longest_streak || 0,
         thisMonthCheckins: statsData.this_month_checkins || 0
       });
-      
-      console.log('✅ State updated - checkins Set has', monthlyData.checkins.length, 'items');
     } catch (error) {
-      console.error('❌ Failed to load check-in data:', error);
-      console.error('❌ Error response:', error.response?.data);
-      console.error('❌ Error status:', error.response?.status);
-    } finally {
-      setLoading(false);
+      console.error('Failed to load check-in data:', error);
     }
   }, [currentDate]);
 
-  // Load check-in data when component mounts or user changes
   useEffect(() => {
-    console.log('🚀 Navbar mounted/user changed, user:', user?.username);
-    if (user) {
-      console.log('📅 Loading check-in data...');
-      loadCheckinData();
-    } else {
-      console.log('⚠️ No user found, skipping data load');
-    }
+    if (user) loadCheckinData();
   }, [user, loadCheckinData]);
 
-  // Reload calendar data when it's opened
   useEffect(() => {
-    console.log('🔄 Calendar state changed:', showCalendar, 'user:', user?.username);
-    if (showCalendar && user) {
-      console.log('🔄 Calendar opened, loading data...');
-      loadCheckinData();
-    }
+    if (showCalendar && user) loadCheckinData();
   }, [showCalendar, user, loadCheckinData]);
 
   const navigateMonth = async (direction) => {
     const newDate = new Date(currentDate);
     newDate.setMonth(currentDate.getMonth() + direction);
     setCurrentDate(newDate);
-    
     try {
       const monthlyData = await checkinService.getMonthlyCheckins(newDate.getFullYear(), newDate.getMonth() + 1);
       setCheckins(new Set(monthlyData.checkins));
@@ -104,284 +64,192 @@ const Navbar = () => {
     const end = endOfMonth(currentDate);
     const startWeek = startOfWeek(start, { weekStartsOn: 1 });
     const endWeek = endOfWeek(end, { weekStartsOn: 1 });
-    
     return eachDayOfInterval({ start: startWeek, end: endWeek });
   };
 
-  const isDayCheckedIn = (date) => {
-    const dateStr = format(date, 'yyyy-MM-dd');
-    const isChecked = checkins.has(dateStr);
-    if (isToday(date)) {
-      console.log(`🔍 Checking today (${dateStr}):`, isChecked, 'All checkins:', Array.from(checkins));
-    }
-    return isChecked;
-  };
+  const isDayCheckedIn = (date) => checkins.has(format(date, 'yyyy-MM-dd'));
 
-  const getDayStatus = (date) => {
-    const isCurrentMonth = format(date, 'MM') === format(currentDate, 'MM');
-    const isCheckedIn = isDayCheckedIn(date);
-    const isTodayDate = isToday(date);
-    const isPastDate = isBefore(date, new Date()) && !isTodayDate;
-
-    if (!isCurrentMonth) return 'text-gray-300 dark:text-gray-600 bg-gray-50 dark:bg-gray-800';
-    if (isTodayDate && isCheckedIn) return 'bg-green-500 text-white font-bold border-2 border-green-600';
-    if (isTodayDate) return 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 font-bold border-2 border-blue-300 dark:border-blue-600';
-    if (isCheckedIn) return 'bg-green-500 text-white';
-    if (isPastDate) return 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500';
-    return 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700';
-  };
+  const navItems = [
+    { path: '/dashboard', label: 'Tracker', icon: LayoutDashboard },
+    { path: '/journal', label: 'Journal', icon: BookOpen },
+    { path: '/new-skill', label: 'New Skill', icon: Target },
+    { path: '/expenses', label: 'Expenses', icon: PiggyBank },
+  ];
 
   return (
-    <nav className="surface-nav sticky top-0 z-40 text-primary-50">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16">
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <h1 className="text-base sm:text-xl font-bold text-primary-50 truncate">
-                <span className="hidden sm:inline">YOU vs YOU</span>
-                <span className="sm:hidden">YOU vs YOU</span>
-              </h1>
-            </div>
-            
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center space-x-1 ml-4">
+    <nav className="nav-bar sticky top-0 z-40">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="flex justify-between items-center h-14">
+          {/* Brand */}
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="text-lg font-extrabold tracking-tight text-neutral-900 hover:opacity-80 transition-opacity"
+          >
+            YOU vs YOU
+          </button>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-1">
+            {navItems.map(({ path, label, icon: Icon }) => (
               <button
-                onClick={() => navigate('/dashboard')}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-sm font-medium ${
-                  isActive('/dashboard')
-                    ? 'bg-primary-800/70 text-primary-50'
-                    : 'text-primary-100 hover:bg-primary-800/60'
+                key={path}
+                onClick={() => navigate(path)}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all ${
+                  isActive(path) ? 'nav-link-active' : 'nav-link'
                 }`}
               >
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Tracker</span>
+                <Icon className="w-4 h-4" />
+                <span>{label}</span>
               </button>
-              <button
-                onClick={() => navigate('/journal')}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-sm font-medium ${
-                  isActive('/journal')
-                    ? 'bg-primary-800/70 text-primary-50'
-                    : 'text-primary-100 hover:bg-primary-800/60'
-                }`}
-              >
-                <BookOpen className="w-4 h-4" />
-                <span>Journal</span>
-              </button>
-              <button
-                onClick={() => navigate('/new-skill')}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-sm font-medium ${
-                  isActive('/new-skill')
-                    ? 'bg-primary-800/70 text-primary-50'
-                    : 'text-primary-100 hover:bg-primary-800/60'
-                }`}
-              >
-                <Target className="w-4 h-4" />
-                <span>New Skill</span>
-              </button>
-              <button
-                onClick={() => navigate('/expenses')}
-                className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors text-sm font-medium ${
-                  isActive('/expenses')
-                    ? 'bg-primary-800/70 text-primary-50'
-                    : 'text-primary-100 hover:bg-primary-800/60'
-                }`}
-              >
-                <PiggyBank className="w-4 h-4" />
-                <span>Expenses</span>
-              </button>
-            </div>
+            ))}
           </div>
-          
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            {/* Mobile Navigation */}
-            <div className="md:hidden flex items-center space-x-1">
-              <button
-                onClick={() => navigate('/dashboard')}
-                className={`p-2 rounded-lg transition-colors ${
-                  isActive('/dashboard')
-                    ? 'bg-primary-800/70 text-primary-50'
-                    : 'text-primary-100 hover:bg-primary-800/60'
-                }`}
-                title="Tracker"
-              >
-                <LayoutDashboard className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => navigate('/journal')}
-                className={`p-2 rounded-lg transition-colors ${
-                  isActive('/journal')
-                    ? 'bg-primary-800/70 text-primary-50'
-                    : 'text-primary-100 hover:bg-primary-800/60'
-                }`}
-                title="Journal"
-              >
-                <BookOpen className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => navigate('/new-skill')}
-                className={`p-2 rounded-lg transition-colors ${
-                  isActive('/new-skill')
-                    ? 'bg-primary-800/70 text-primary-50'
-                    : 'text-primary-100 hover:bg-primary-800/60'
-                }`}
-                title="New Skill"
-              >
-                <Target className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => navigate('/expenses')}
-                className={`p-2 rounded-lg transition-colors ${
-                  isActive('/expenses')
-                    ? 'bg-primary-800/70 text-primary-50'
-                    : 'text-primary-100 hover:bg-primary-800/60'
-                }`}
-                title="Expenses"
-              >
-                <PiggyBank className="w-5 h-5" />
-              </button>
+
+          {/* Right side */}
+          <div className="flex items-center gap-2">
+            {/* Mobile Nav */}
+            <div className="md:hidden flex items-center gap-0.5">
+              {navItems.map(({ path, label, icon: Icon }) => (
+                <button
+                  key={path}
+                  onClick={() => navigate(path)}
+                  className={`p-2 rounded-lg transition-colors ${
+                    isActive(path) ? 'text-primary-500' : 'text-neutral-400 hover:text-neutral-600'
+                  }`}
+                  title={label}
+                >
+                  <Icon className="w-5 h-5" />
+                </button>
+              ))}
             </div>
 
-            <div className="hidden sm:flex items-center space-x-2">
-              <div className="relative">
-                <button
-                  onClick={() => setShowCalendar(!showCalendar)}
-                  className="font-medium text-sm sm:text-base flex items-center space-x-1 hover:bg-primary-800/60 px-2 py-1 rounded-lg transition-colors text-primary-50"
-                >
-                  <User className="w-4 h-4 sm:w-5 sm:h-5" />
-                  <span>{user?.username}</span>
-                  <div className="flex items-center space-x-1 text-xs">
-                    <Flame className="w-3 h-3 text-orange-500" />
-                    <span>{stats.currentStreak}</span>
-                  </div>
-                  <ChevronDown className="w-3 h-3" />
-                </button>
-                
-                {/* Calendar Dropdown */}
-                {showCalendar && (
-                  <div className="absolute top-full right-0 mt-2 surface-card rounded-xl p-4 z-50 w-80">
-                  {/* Stats */}
-                  <div className="grid grid-cols-3 gap-2 mb-4">
+            {/* User + Calendar */}
+            <div className="relative">
+              <button
+                onClick={() => setShowCalendar(!showCalendar)}
+                className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-neutral-100 transition-colors text-sm"
+              >
+                <div className="w-7 h-7 rounded-full bg-primary-100 flex items-center justify-center">
+                  <User className="w-3.5 h-3.5 text-primary-500" />
+                </div>
+                <span className="hidden sm:inline font-medium text-neutral-700">{user?.username}</span>
+                <div className="flex items-center gap-0.5 text-xs text-primary-500">
+                  <Flame className="w-3 h-3" />
+                  <span className="font-semibold">{stats.currentStreak}</span>
+                </div>
+                <ChevronDown className="w-3 h-3 text-neutral-400" />
+              </button>
+
+              {/* Calendar Dropdown */}
+              {showCalendar && (
+                <div className="absolute top-full right-0 mt-2 w-80 card-clean p-4 z-50 shadow-float animate-fade-in-up">
+                  {/* Stats Row */}
+                  <div className="grid grid-cols-3 gap-3 mb-4">
                     <div className="text-center">
-                      <div className="flex items-center justify-center text-orange-400 mb-1">
-                        <Flame className="w-4 h-4" />
-                      </div>
-                      <div className="text-sm font-bold text-primary-50">{stats.currentStreak}</div>
-                      <div className="text-xs text-primary-100/80">Streak</div>
+                      <Flame className="w-4 h-4 mx-auto mb-1 text-primary-500" />
+                      <div className="text-sm font-bold text-neutral-800">{stats.currentStreak}</div>
+                      <div className="text-xs text-neutral-400">Streak</div>
                     </div>
                     <div className="text-center">
-                      <div className="flex items-center justify-center text-yellow-400 mb-1">
-                        <Trophy className="w-4 h-4" />
-                      </div>
-                      <div className="text-sm font-bold text-primary-50">{stats.longestStreak}</div>
-                      <div className="text-xs text-primary-100/80">Best</div>
+                      <Trophy className="w-4 h-4 mx-auto mb-1 text-amber-500" />
+                      <div className="text-sm font-bold text-neutral-800">{stats.longestStreak}</div>
+                      <div className="text-xs text-neutral-400">Best</div>
                     </div>
                     <div className="text-center">
-                      <div className="flex items-center justify-center text-blue-300 mb-1">
-                        <Calendar className="w-4 h-4" />
-                      </div>
-                      <div className="text-sm font-bold text-primary-50">{stats.thisMonthCheckins}</div>
-                      <div className="text-xs text-primary-100/80">Month</div>
+                      <Calendar className="w-4 h-4 mx-auto mb-1 text-blue-400" />
+                      <div className="text-sm font-bold text-neutral-800">{stats.thisMonthCheckins}</div>
+                      <div className="text-xs text-neutral-400">Month</div>
                     </div>
                   </div>
-                  
+
+                  <hr className="divider mb-3" />
+
                   {/* Calendar Header */}
                   <div className="flex items-center justify-between mb-3">
-                    <button
-                      onClick={() => navigateMonth(-1)}
-                      className="p-1 hover:bg-primary-800/60 rounded text-primary-50"
-                    >
+                    <button onClick={() => navigateMonth(-1)} className="p-1 hover:bg-neutral-100 rounded text-neutral-500">
                       <ChevronLeft className="w-4 h-4" />
                     </button>
-                    <h3 className="text-sm font-semibold text-primary-50">
-                      {format(currentDate, 'MMMM yyyy')}
-                    </h3>
-                    <button
-                      onClick={() => navigateMonth(1)}
-                      className="p-1 hover:bg-primary-800/60 rounded text-primary-50"
-                    >
+                    <span className="text-sm font-semibold text-neutral-700">{format(currentDate, 'MMMM yyyy')}</span>
+                    <button onClick={() => navigateMonth(1)} className="p-1 hover:bg-neutral-100 rounded text-neutral-500">
                       <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
-                  
+
+                  {/* Day headers */}
+                  <div className="grid grid-cols-7 gap-1 mb-1">
+                    {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+                      <div key={i} className="text-center text-xs font-medium text-neutral-400 py-1">{d}</div>
+                    ))}
+                  </div>
+
                   {/* Calendar Grid */}
                   <div className="grid grid-cols-7 gap-1 mb-3">
-                    {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map(day => (
-                      <div key={day} className="text-center text-xs font-medium text-primary-100/80 py-1">
-                        {day}
-                      </div>
-                    ))}
-                    
                     {getDaysInMonth().map(date => {
                       const dateStr = format(date, 'yyyy-MM-dd');
                       const isCheckedIn = isDayCheckedIn(date);
                       const isTodayDate = isToday(date);
                       const isPastDate = isBefore(date, new Date());
                       const isCurrentMonth = format(date, 'MM') === format(currentDate, 'MM');
-                      const shouldShowStatus = isCurrentMonth && (isPastDate || isTodayDate);
-                      
-                      // Determine styling
-                      let cellClasses = 'aspect-square rounded text-xs flex items-center justify-center relative ';
-                      
+                      const shouldShow = isCurrentMonth && (isPastDate || isTodayDate);
+
+                      let cls = 'aspect-square rounded-lg text-xs flex items-center justify-center font-medium ';
                       if (!isCurrentMonth) {
-                        cellClasses += 'text-gray-400 dark:text-gray-600';
+                        cls += 'text-neutral-200';
+                      } else if (isTodayDate && isCheckedIn) {
+                        cls += 'checkin-day-today bg-green-50 ring-2 ring-green-400';
                       } else if (isTodayDate) {
-                        cellClasses += 'bg-blue-200 text-blue-800 font-bold border-2 border-blue-500';
+                        cls += 'checkin-day-today';
+                      } else if (shouldShow && isCheckedIn) {
+                        cls += 'checkin-day-logged';
+                      } else if (shouldShow && !isCheckedIn) {
+                        cls += 'checkin-day-missed';
                       } else {
-                        cellClasses += 'text-primary-100';
+                        cls += 'text-neutral-500';
                       }
-                      
-                      // Add green circle for logged in days
-                      if (shouldShowStatus && isCheckedIn && !isTodayDate) {
-                        cellClasses += ' ring-2 ring-green-400 bg-green-100 text-green-800';
-                      } else if (shouldShowStatus && !isCheckedIn && !isTodayDate) {
-                        cellClasses += ' ring-2 ring-red-400 bg-red-100 text-red-800';
-                      }
-                      
-                      // Add green/red circle to today if logged in/not logged in
-                      if (isTodayDate && isCheckedIn) {
-                        cellClasses += ' ring-2 ring-green-500';
-                      } else if (isTodayDate && !isCheckedIn && isCurrentMonth) {
-                        cellClasses += ' ring-2 ring-red-500';
-                      }
-                      
+
                       return (
-                        <div
-                          key={dateStr}
-                          className={cellClasses}
-                        >
-                          <span>{format(date, 'd')}</span>
+                        <div key={dateStr} className={cls}>
+                          {format(date, 'd')}
                         </div>
                       );
                     })}
                   </div>
-                  
+
                   {/* Legend */}
-                  <div className="flex items-center justify-between text-xs text-primary-100/80">
-                    <div className="flex items-center space-x-1">
-                      <div className="w-3 h-3 bg-green-100 rounded ring-2 ring-green-400"></div>
+                  <div className="flex items-center justify-between text-xs text-neutral-400">
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 rounded bg-green-50 border-2 border-green-400"></div>
                       <span>Logged In</span>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <div className="w-3 h-3 bg-red-100 rounded ring-2 ring-red-400"></div>
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 rounded bg-pink-50 border-2 border-pink-200"></div>
                       <span>Missed</span>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <div className="w-3 h-3 bg-blue-200 border-2 border-blue-500 rounded"></div>
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 rounded bg-primary-100 border-2 border-primary-400"></div>
                       <span>Today</span>
                     </div>
                   </div>
+
+                  <hr className="divider my-3" />
+
+                  {/* Profile + Logout */}
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => { navigate('/profile'); setShowCalendar(false); }}
+                      className="flex-1 text-sm font-medium text-neutral-600 hover:text-neutral-800 py-2 text-center rounded-lg hover:bg-neutral-50 transition-colors"
+                    >
+                      Profile
+                    </button>
+                    <button
+                      onClick={logout}
+                      className="flex items-center justify-center gap-1.5 text-sm font-medium text-red-500 hover:text-red-600 py-2 px-4 rounded-lg hover:bg-red-50 transition-colors"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Logout</span>
+                    </button>
+                  </div>
                 </div>
               )}
-              </div>
-              
-              <button
-                onClick={logout}
-                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-1.5 sm:py-2 text-primary-50 hover:bg-primary-800/60 rounded-lg transition-colors text-sm sm:text-base"
-                title="Logout"
-              >
-                <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="hidden sm:inline">Logout</span>
-              </button>
             </div>
           </div>
         </div>

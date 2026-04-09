@@ -8,6 +8,7 @@ import Journal from './pages/Journal';
 import NewSkill from './pages/NewSkill';
 import Expenses from './pages/Expenses';
 import Profile from './pages/Profile';
+import ChatBot from './components/ChatBot';
 import './index.css';
 
 const Router = import.meta.env.VITE_ROUTER_MODE === 'hash' ? HashRouter : BrowserRouter;
@@ -61,6 +62,7 @@ function App() {
             }
           />
         </Routes>
+        <ChatBot />
       </AuthProvider>
     </Router>
   );

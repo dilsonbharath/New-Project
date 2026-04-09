@@ -46,6 +46,8 @@ class Settings(BaseSettings):
         "CORS_ORIGINS",
         ",".join(_default_cors_origins())
     )
+    HF_API_TOKEN: str = ""
+    HF_MODEL: str = "mistralai/Mistral-7B-Instruct-v0.3"
 
     class Config:
         env_file = ".env"
