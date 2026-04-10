@@ -13,3 +13,5 @@ ENV/
 .vscode/
 .idea/
 *.log
+faiss_index/
+.venv/

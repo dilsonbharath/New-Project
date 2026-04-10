@@ -12,3 +12,13 @@ email-validator==2.3.0
 psycopg[binary]==3.2.6
 requests==2.31.0
 scikit-learn==1.4.0
+# ── RAG dependencies (lightweight — server compatible) ──
+faiss-cpu==1.7.4
+langchain>=0.1.0
+langchain-community>=0.0.10
+langchain-text-splitters>=0.0.1
+numpy>=1.24.0
+# ── Heavy packages (install ONLY on local dev, NOT on Render free) ──
+# sentence-transformers>=2.2.2
+# transformers>=4.36.0
+# torch>=2.1.0
